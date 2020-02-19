@@ -1,0 +1,6 @@
+build
+vendor
+.phpunit.result.cache
+tests/files/oauth-public.key
+tests/files/oauth-private.key
+.vscode

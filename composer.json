@@ -1,0 +1,38 @@
+{
+    "name": "nl.idaas/laravel-openid-connect",
+    "description": "Drop-in replacement for Laravel Passport to add support for OpenID Connect",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Arie Timmerman",
+            "email": "arietimmerman@a11n.nl"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Idaas\\Passport\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "IdaasPassportTests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Idaas\\Passport\\PassportServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "laravel/passport": "^8.4",
+        "nl.idaas/openid-server": "*"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.0",
+        "orchestra/testbench": "^4.4|^5.0",
+        "phpunit/phpunit": "^8.0"
+    }
+}
