@@ -106,4 +106,23 @@ class RouteRegistrar extends LaravelRouteRegistrar
             ])->name('oidc.manage.client.delete');
         });
     }
+
+    /**
+     * Register the routes for retrieving and issuing access tokens.
+     *
+     * @return void
+     */
+    public function forAccessTokens()
+    {
+        $this->router->post('/token', [
+            'uses' => 'AccessTokenController@issueToken',
+            'middleware' => 'throttle',
+        ])->name('oauth.token');
+
+        $this->router->group(['middleware' => ['web', 'auth']], function ($router) {
+            $router->delete('/tokens/{token_id}', [
+                'uses' => 'AuthorizedAccessTokenController@destroy',
+            ]);
+        });
+    }
 }

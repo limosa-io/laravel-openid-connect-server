@@ -3,7 +3,7 @@
 namespace Idaas\Passport;
 
 use Idaas\OpenID\CryptKey;
-use Idaas\Passport\Client;
+use Idaas\Passport\Model\Client;
 use Laravel\Passport\Passport;
 
 class KeyRepository
