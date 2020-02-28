@@ -6,6 +6,8 @@ use DateInterval;
 use Idaas\OpenID\Grant\AuthCodeGrant;
 use Idaas\OpenID\Repositories\ClaimRepositoryInterface;
 use Idaas\OpenID\Session;
+use Idaas\Passport\Bridge\ClaimRepository;
+use Idaas\Passport\Model\Client;
 use Laravel\Passport\Bridge\AuthCodeRepository;
 use Laravel\Passport\Bridge\RefreshTokenRepository;
 use Laravel\Passport\Bridge\ScopeRepository;
@@ -15,14 +17,31 @@ use League\OAuth2\Server\AuthorizationServer;
 class PassportServiceProvider extends LaravelPassportServiceProvider
 {
 
+    public function boot()
+    {
+        Passport::useClientModel(Client::class);
+
+        parent::boot();
+
+        $this->app->bindIf(ClaimRepositoryInterface::class, ClaimRepository::class);
+    }
+
+    protected function makeCryptKey($type)
+    {
+        if ($type == 'private') {
+            return resolve(KeyRepository::class)->getPrivateKey();
+        } else {
+            return resolve(KeyRepository::class)->getPublicKey();
+        }
+    }
+
     public function makeAuthorizationServer()
     {
-
         $server = new AuthorizationServer(
             $this->app->make(Bridge\ClientRepository::class),
             $this->app->make(Bridge\AccessTokenRepository::class),
             $this->app->make(ScopeRepository::class),
-            $this->makeCryptKey('private'),
+            resolve(KeyRepository::class)->getPrivateKey(),
             app('encrypter')->getKey()
         );
 

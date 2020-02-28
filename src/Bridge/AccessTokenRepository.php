@@ -8,10 +8,16 @@ use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 
 class AccessTokenRepository extends LaravelAccessTokenRepository implements AccessTokenRepositoryInterface
 {
-    public function storeClaims(AccessTokenEntityInterface $accessTokenEntity, array $claims)
+    public function storeClaims($id, array $claims)
     {
         $token = $this->tokenRepository->find($id);
         $token->claims = $claims;
         $token->save();
+    }
+
+    // TODO: not needed, update AccessTokenRepositoryInterface
+    public function getAccessToken($tokenId)
+    {
+        // TODO: not in use
     }
 }
