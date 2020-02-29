@@ -32,4 +32,13 @@ class ClaimEntity implements ClaimEntityInterface
     {
         return $this->essential;
     }
+
+    public function jsonSerialize()
+    {
+        return [
+            'identifier' => $this->getIdentifier(),
+            'type' => $this->getType(),
+            'essential' => $this->getEssential()
+        ];
+    }
 }
