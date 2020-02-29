@@ -2,8 +2,8 @@
 
 namespace Idaas\Passport;
 
+use Idaas\Passport\Model\Client;
 use Illuminate\Http\Request;
-use ArieTimmerman\Passport\OIDC\Model\Client;
 use Illuminate\Contracts\Routing\ResponseFactory;
 
 class SessionManagementController

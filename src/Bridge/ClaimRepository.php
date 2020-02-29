@@ -32,7 +32,7 @@ class ClaimRepository implements ClaimRepositoryInterface
 
         if (isset($map[$scope])) {
             foreach ($map[$scope] as $claim) {
-                $result[] = new ClaimEntity($claim, null, null);
+                $result[] = new ClaimEntity($claim, ClaimEntity::TYPE_USERINFO, false);
             }
         }
 

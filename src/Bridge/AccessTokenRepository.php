@@ -4,6 +4,8 @@ namespace Idaas\Passport\Bridge;
 
 use Idaas\OpenID\Repositories\AccessTokenRepositoryInterface;
 use Laravel\Passport\Bridge\AccessTokenRepository as LaravelAccessTokenRepository;
+use Laravel\Passport\Bridge\Client;
+use Laravel\Passport\Bridge\Scope;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 
 class AccessTokenRepository extends LaravelAccessTokenRepository implements AccessTokenRepositoryInterface
@@ -15,9 +17,17 @@ class AccessTokenRepository extends LaravelAccessTokenRepository implements Acce
         $token->save();
     }
 
-    // TODO: not needed, update AccessTokenRepositoryInterface
-    public function getAccessToken($tokenId)
+    public function getAccessToken($id)
     {
-        // TODO: not in use
+        $token = $this->tokenRepository->find($id);
+
+        return new AccessToken(
+            $token->user_id,
+            collect($token->scopes)->map(function ($scope) {
+                return new Scope($scope);
+            })->toArray(),
+            new Client('not used', 'not used', 'not used', false),
+            $token->claims ?? []
+        );
     }
 }

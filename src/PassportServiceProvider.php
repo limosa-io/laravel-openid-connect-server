@@ -14,6 +14,7 @@ use Idaas\OpenID\Repositories\AccessTokenRepositoryInterface;
 use Idaas\Passport\Bridge\ClaimRepository;
 use Idaas\Passport\Bridge\UserRepository;
 use Idaas\Passport\Model\Client;
+use Laravel\Passport\Bridge\AccessTokenRepository as BridgeAccessTokenRepository;
 use Laravel\Passport\Bridge\AuthCodeRepository;
 use Laravel\Passport\Bridge\RefreshTokenRepository;
 use Laravel\Passport\Bridge\ScopeRepository;
@@ -33,6 +34,7 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
     public function boot()
     {
         Passport::useClientModel($this->getClientModel());
+        // Passport::useTokenModel()
 
         parent::boot();
 
@@ -41,6 +43,9 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
 
         $this->app->singleton(AccessTokenRepositoryInterface::class, function ($app) {
             return $this->app->make(AccessTokenRepository::class);
+        });
+        $this->app->singleton(BridgeAccessTokenRepository::class, function ($app) {
+            return $app->make(AccessTokenRepositoryInterface::class);
         });
     }
 

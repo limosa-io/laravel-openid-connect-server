@@ -7,6 +7,7 @@ use Idaas\OpenID\Repositories\UserRepositoryTrait;
 use Laravel\Passport\Bridge\User;
 use Laravel\Passport\Bridge\UserRepository as LaravelUserRepository;
 use League\OAuth2\Server\Entities\UserEntityInterface;
+use RuntimeException;
 
 class UserRepository extends LaravelUserRepository implements UserRepositoryInterface
 {

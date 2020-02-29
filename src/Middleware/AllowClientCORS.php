@@ -56,7 +56,8 @@ class AllowClientCORS
 
                 $parse['port'] = $parse['port'] ?? 80;
 
-                if ($origin == null ||
+                if (
+                    $origin == null ||
                     $origin == ($parse['scheme'] . "://" . $parse['host'] . ':' . $parse['port']) || ($parse['port'] == 80 || $parse['port'] == 443) && $origin == ($parse['scheme'] . "://" . $parse['host'])
                 ) {
                     $allowed = true;
@@ -84,13 +85,13 @@ class AllowClientCORS
         } elseif ($this->isCORSAllowed($request)) {
             $response = $next($request);
 
-            $response
-                ->header('Access-Control-Allow-Methods', $this->methods)
-                ->header('Access-Control-Allow-Headers', $this->headers)
-                ->header('Access-Control-Allow-Credentials', 'true')
-                ->header('Access-Control-Allow-Origin', $request->headers->get('origin'))
-                ->header('Vary', 'Origin')
-                ->header('Access-Control-Max-Age', $this->maxAge);
+
+            $response->headers->set('Access-Control-Allow-Methods', $this->methods);
+            $response->headers->set('Access-Control-Allow-Headers', $this->headers);
+            $response->headers->set('Access-Control-Allow-Credentials', 'true');
+            $response->headers->set('Access-Control-Allow-Origin', $request->headers->get('origin'));
+            $response->headers->set('Vary', 'Origin');
+            $response->headers->set('Access-Control-Max-Age', $this->maxAge);
 
             return $response;
         } else {
