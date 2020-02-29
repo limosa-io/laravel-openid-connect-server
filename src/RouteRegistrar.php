@@ -10,12 +10,12 @@ class RouteRegistrar extends LaravelRouteRegistrar
     {
         $this->router->group(['middleware' => ['web']], function ($router) {
             $router->get('/authorize', [
-                'uses' => 'AuthorizationController@authorize',
+                'uses' => '\Idaas\Passport\Http\Controllers\AuthorizationController@authorize',
             ])->name('oauth.authorize');
 
 
             $router->get('/logout', [
-                'uses' => 'SessionManagementController@logout',
+                'uses' => '\Idaas\Passport\SessionManagementController@logout',
             ])->name('oidc.logout');
         });
     }
@@ -24,7 +24,7 @@ class RouteRegistrar extends LaravelRouteRegistrar
     {
         $this->router->group([], function ($router) {
             $this->router->match(['get', 'post'], '/userinfo', [
-                'uses' => 'UserInfoController@userinfo',
+                'uses' => '\Idaas\Passport\UserInfoController@userinfo',
             ])->name('oidc.userinfo');
         });
     }
@@ -33,11 +33,11 @@ class RouteRegistrar extends LaravelRouteRegistrar
     {
         $this->router->group([], function ($router) {
             $this->router->post('/introspect', [
-                'uses' => 'IntrospectionController@introspect',
+                'uses' => '\Idaas\Passport\IntrospectionController@introspect',
             ])->name('oauth.introspect');
 
             $this->router->post('/revoke', [
-                'uses' => 'RevokeController@index',
+                'uses' => '\Idaas\Passport\RevokeController@index',
             ])->name('oauth.revoke');
         });
     }
@@ -46,7 +46,7 @@ class RouteRegistrar extends LaravelRouteRegistrar
     {
         $this->router->group(['middleware' => ['web']], function ($router) {
             $router->get('/logout', [
-                'uses' => 'SessionManagementController@logout',
+                'uses' => '\Idaas\Passport\SessionManagementController@logout',
             ])->name('oidc.logout');
         });
     }
@@ -55,15 +55,15 @@ class RouteRegistrar extends LaravelRouteRegistrar
     {
         $this->router->group([], function ($router) {
             $router->get('/.well-known/openid-configuration', [
-                'uses' => 'ProviderController@wellknown',
+                'uses' => '\Idaas\Passport\ProviderController@wellknown',
             ])->name('oidc.configuration');
 
             $router->get('/.well-known/jwks.json', [
-                'uses' => 'ProviderController@jwks',
+                'uses' => '\Idaas\Passport\ProviderController@jwks',
             ])->name('oidc.jwks');
 
             $router->get('/.well-known/webfinger', [
-                'uses' => 'ProviderController@webfinger',
+                'uses' => '\Idaas\Passport\ProviderController@webfinger',
             ])->name('oidc.webfinger');
         });
     }
@@ -72,11 +72,11 @@ class RouteRegistrar extends LaravelRouteRegistrar
     {
         $this->router->group(['middleware' => ['api']], function ($router) {
             $router->get('/oidc/provider', [
-                'uses' => 'ProviderController@index',
+                'uses' => '\Idaas\Passport\ProviderController@index',
             ]);
 
             $router->put('/oidc/provider', [
-                'uses' => 'ProviderController@update',
+                'uses' => '\Idaas\Passport\ProviderController@update',
             ]);
         });
     }

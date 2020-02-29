@@ -5,6 +5,7 @@ namespace Idaas\Passport;
 use DateInterval;
 use Idaas\OpenID\Grant\AuthCodeGrant;
 use Idaas\OpenID\Repositories\ClaimRepositoryInterface;
+use Idaas\OpenID\ResponseTypes\BearerTokenResponse;
 use Idaas\OpenID\Session;
 use Idaas\Passport\Bridge\ClaimRepository;
 use Idaas\Passport\Model\Client;
@@ -17,9 +18,14 @@ use League\OAuth2\Server\AuthorizationServer;
 class PassportServiceProvider extends LaravelPassportServiceProvider
 {
 
+    protected function getClientModel()
+    {
+        return Client::class;
+    }
+
     public function boot()
     {
-        Passport::useClientModel(Client::class);
+        Passport::useClientModel($this->getClientModel());
 
         parent::boot();
 
@@ -42,7 +48,8 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
             $this->app->make(Bridge\AccessTokenRepository::class),
             $this->app->make(ScopeRepository::class),
             resolve(KeyRepository::class)->getPrivateKey(),
-            app('encrypter')->getKey()
+            app('encrypter')->getKey(),
+            new BearerTokenResponse
         );
 
         $server->enableGrantType(

@@ -1,6 +1,6 @@
 <?php
 
-namespace Idaas\OpenID;
+namespace Idaas\Passport;
 
 use Illuminate\Http\JsonResponse;
 use Lcobucci\JWT\Parser;

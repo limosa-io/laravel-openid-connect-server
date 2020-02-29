@@ -21,13 +21,40 @@ class ClaimRepository implements ClaimRepositoryInterface
 
     public function getClaimEntityByIdentifier($identifier, $type, $essential)
     {
-        return null;
+        return new ClaimEntity($identifier, $type, $essential);
     }
 
-    public function claimsRequestToEntities(string $json = null)
+    public function getClaimsByScope(string $scope): iterable
     {
-        json_decode($json);
+        $result = [];
 
-        return [];
+        $map = $this->getScopeClaims();
+
+        if (isset($map[$scope])) {
+            foreach ($map[$scope] as $claim) {
+                $result[] = new ClaimEntity($claim, null, null);
+            }
+        }
+
+        return $result;
+    }
+
+    public function claimsRequestToEntities(array $json = null)
+    {
+        $result = [];
+
+        foreach ([ClaimEntity::TYPE_ID_TOKEN, ClaimEntity::TYPE_USERINFO] as $type) {
+            if ($json != null && isset($json[$type])) {
+                foreach ($json[$type] as $claim => $properties) {
+                    $result[] = new ClaimEntity(
+                        $claim,
+                        $type,
+                        isset($properties) && isset($properties['essential']) ? $properties['essential'] : false
+                    );
+                }
+            }
+        }
+
+        return $result;
     }
 }

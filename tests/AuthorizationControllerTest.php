@@ -175,8 +175,8 @@ class AuthorizationControllerTest extends TestCase
         $this->assertNotNull($location);
         $parsed = parse_url($location);
 
-        $this->assertArrayHasKey('fragment', $parsed);
-        parse_str($parsed['fragment'], $parseStr);
+        $this->assertArrayHasKey('query', $parsed);
+        parse_str($parsed['query'], $parseStr);
         $this->assertArrayHasKey('code', $parseStr);
 
         $controller = new AccessTokenController($server, $tokens, new Parser());
