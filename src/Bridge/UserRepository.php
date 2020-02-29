@@ -4,6 +4,7 @@ namespace Idaas\Passport\Bridge;
 
 use Idaas\OpenID\Repositories\UserRepositoryInterface;
 use Idaas\OpenID\Repositories\UserRepositoryTrait;
+use Laravel\Passport\Bridge\User;
 use Laravel\Passport\Bridge\UserRepository as LaravelUserRepository;
 use League\OAuth2\Server\Entities\UserEntityInterface;
 
@@ -17,8 +18,9 @@ class UserRepository extends LaravelUserRepository implements UserRepositoryInte
      */
     public function getAttributes(UserEntityInterface $user, $claims, $scopes)
     {
-        die('to be defined');
-        return null;
+        return [
+            'sub' => $user->getIdentifier()
+        ];
     }
 
     public function getUserByIdentifier($identifier) : ?UserEntityInterface

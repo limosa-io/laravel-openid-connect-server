@@ -4,16 +4,23 @@ namespace Idaas\Passport;
 
 use DateInterval;
 use Idaas\OpenID\Grant\AuthCodeGrant;
+use Idaas\OpenID\Grant\ImplicitGrant;
 use Idaas\OpenID\Repositories\ClaimRepositoryInterface;
+use Idaas\OpenID\Repositories\UserRepositoryInterface;
 use Idaas\OpenID\ResponseTypes\BearerTokenResponse;
 use Idaas\OpenID\Session;
+use Idaas\Passport\Bridge\AccessTokenRepository;
+use Idaas\OpenID\Repositories\AccessTokenRepositoryInterface;
 use Idaas\Passport\Bridge\ClaimRepository;
+use Idaas\Passport\Bridge\UserRepository;
 use Idaas\Passport\Model\Client;
 use Laravel\Passport\Bridge\AuthCodeRepository;
 use Laravel\Passport\Bridge\RefreshTokenRepository;
 use Laravel\Passport\Bridge\ScopeRepository;
 use Laravel\Passport\PassportServiceProvider as LaravelPassportServiceProvider;
 use League\OAuth2\Server\AuthorizationServer;
+use League\OAuth2\Server\AuthorizationValidators\AuthorizationValidatorInterface;
+use League\OAuth2\Server\ResourceServer;
 
 class PassportServiceProvider extends LaravelPassportServiceProvider
 {
@@ -30,6 +37,11 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
         parent::boot();
 
         $this->app->bindIf(ClaimRepositoryInterface::class, ClaimRepository::class);
+        $this->app->bindIf(UserRepositoryInterface::class, UserRepository::class);
+
+        $this->app->singleton(AccessTokenRepositoryInterface::class, function ($app) {
+            return $this->app->make(AccessTokenRepository::class);
+        });
     }
 
     protected function makeCryptKey($type)
@@ -39,6 +51,17 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
         } else {
             return resolve(KeyRepository::class)->getPublicKey();
         }
+    }
+
+    protected function registerResourceServer()
+    {
+        $this->app->singleton(ResourceServer::class, function () {
+            // TODO: consider using AdvancedResourceServer
+            return new ResourceServer(
+                $this->app->make(Bridge\AccessTokenRepository::class),
+                $this->makeCryptKey('public')
+            );
+        });
     }
 
     public function makeAuthorizationServer()
@@ -63,7 +86,14 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
             )
         );
 
-        // TODO: enable ImplicitGrant
+        $server->enableGrantType(
+            new ImplicitGrant(
+                $this->app->make(UserRepositoryInterface::class),
+                $this->app->make(ClaimRepositoryInterface::class),
+                new DateInterval('PT10M'),
+                new DateInterval('PT10M')
+            )
+        );
 
         return $server;
     }
