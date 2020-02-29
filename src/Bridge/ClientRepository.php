@@ -1,5 +1,4 @@
 <?php
-// TODO: not sure if this is needed
 namespace Idaas\Passport\Bridge;
 
 use Laravel\Passport\Bridge\ClientRepository as LaravelClientRepository;
@@ -16,5 +15,20 @@ class ClientRepository extends LaravelClientRepository
         }
 
         return $record->application_type != null && in_array($grantType, $result);
+    }
+
+    public function all()
+    {
+        return $this->clients->all();
+    }
+
+    public function findForManagement($clientId)
+    {
+        return $this->clients->findForManagement($clientId);
+    }
+
+    public function getRepository()
+    {
+        return $this->clients;
     }
 }

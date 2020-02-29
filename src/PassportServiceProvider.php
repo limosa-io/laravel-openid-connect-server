@@ -18,9 +18,9 @@ use Laravel\Passport\Bridge\AccessTokenRepository as BridgeAccessTokenRepository
 use Laravel\Passport\Bridge\AuthCodeRepository;
 use Laravel\Passport\Bridge\RefreshTokenRepository;
 use Laravel\Passport\Bridge\ScopeRepository;
+use Laravel\Passport\ClientRepository as PassportClientRepository;
 use Laravel\Passport\PassportServiceProvider as LaravelPassportServiceProvider;
 use League\OAuth2\Server\AuthorizationServer;
-use League\OAuth2\Server\AuthorizationValidators\AuthorizationValidatorInterface;
 use League\OAuth2\Server\ResourceServer;
 
 class PassportServiceProvider extends LaravelPassportServiceProvider
@@ -40,6 +40,7 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
 
         $this->app->bindIf(ClaimRepositoryInterface::class, ClaimRepository::class);
         $this->app->bindIf(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bindIf(PassportClientRepository::class, ClientRepository::class);
 
         $this->app->singleton(AccessTokenRepositoryInterface::class, function ($app) {
             return $this->app->make(AccessTokenRepository::class);

@@ -84,7 +84,7 @@ class ClientController extends LaravelClientController
     /**
      * Create a client controller instance.
      *
-     * @param  \ArieTimmerman\Passport\ClientRepository  $clients
+     * @param  \Idaas\Passport\ClientRepository  $clients
      * @param  \Illuminate\Contracts\Validation\Factory  $validation
      * @return void
      */
@@ -102,9 +102,9 @@ class ClientController extends LaravelClientController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function forUser(Request $request, ClientRepository $clientRepository)
+    public function forUser(Request $request)
     {
-        return $clientRepository->all();
+        return $this->clients->all();
     }
 
     /**
@@ -113,12 +113,12 @@ class ClientController extends LaravelClientController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, ClientRepository $clientRepository)
+    public function store(Request $request)
     {
         
         $data = $this->validate($request, $this->validations, $this->messages);
         
-        $client = $this->create(
+        $client = $this->clients->getRepository()->create(
             $request->user()->getKey(),
             $request->client_name,
             $request->redirect_uris
@@ -132,10 +132,10 @@ class ClientController extends LaravelClientController
     }
 
 
-    public function get(Request $request, ClientRepository $clientRepository, $clientId)
+    public function get($clientId)
     {
         //TODO: Add some form of authorization
-        return $clientRepository->findForManagement($clientId);
+        return $this->clients->findForManagement($clientId);
     }
 
     /**
@@ -145,9 +145,9 @@ class ClientController extends LaravelClientController
      * @param  string  $clientId
      * @return \Illuminate\Http\Response|\ArieTimmerman\Passport\Client
      */
-    public function update(Request $request, ClientRepository $clientRepository, $clientId)
+    public function update(Request $request, $clientId)
     {
-        $client =  $clientRepository->find($clientId);
+        $client =  $this->clients->findForManagement($clientId);
 
         if (! $client) {
             return new Response('', 404);
@@ -173,9 +173,9 @@ class ClientController extends LaravelClientController
      * @param  string  $clientId
      * @return Response
      */
-    public function destroy(Request $request, ClientRepository $clientRepository, $clientId)
+    public function destroy(Request $request, $clientId)
     {
-        $client =  $clientRepository->find($clientId);
+        $client =  $this->clients->find($clientId);
 
         if (! $client) {
             return new Response('', 404);

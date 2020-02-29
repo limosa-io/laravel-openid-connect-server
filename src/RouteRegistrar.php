@@ -85,24 +85,24 @@ class RouteRegistrar extends LaravelRouteRegistrar
     {
         $this->router->group(['middleware' => ['api']], function ($router) {
             $router->get('/connect/register', [
-                'uses' => 'ClientController@forUser',
+                'uses' => '\Idaas\Passport\ClientController@forUser',
             ])->name('oidc.manage.client.list');
 
             $router->post('/connect/register', [
-                'uses' => 'ClientController@store',
+                'uses' => '\Idaas\Passport\ClientController@store',
             ])->name('oidc.manage.client.create');
 
             // Not in the specs, yet useful
             $router->get('/connect/register/{client_id}', [
-                'uses' => 'ClientController@get',
+                'uses' => '\Idaas\Passport\ClientController@get',
             ])->name('oidc.manage.client.replace');
 
             $router->put('/connect/register/{client_id}', [
-                'uses' => 'ClientController@update',
+                'uses' => '\Idaas\Passport\ClientController@update',
             ])->name('oidc.manage.client.replace');
 
             $router->delete('/connect/register/{client_id}', [
-                'uses' => 'ClientController@destroy',
+                'uses' => '\Idaas\Passport\ClientController@destroy',
             ])->name('oidc.manage.client.delete');
         });
     }
