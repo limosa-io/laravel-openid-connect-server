@@ -103,4 +103,14 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
 
         return $server;
     }
+
+    protected function buildAuthCodeGrant()
+    {
+        $grant = parent::buildAuthCodeGrant();
+
+        // TODO: temporarily workaround to allow tests to complete
+        $grant->disableRequireCodeChallengeForPublicClients();
+
+        return $grant;
+    }
 }

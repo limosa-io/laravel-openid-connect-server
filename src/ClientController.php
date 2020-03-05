@@ -4,9 +4,9 @@ namespace Idaas\Passport;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Idaas\Passport\Bridge\ClientRepository;
 use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Idaas\Passport\Bridge\ClientRepository;
 
 use Laravel\Passport\Http\Controllers\ClientController as LaravelClientController;
 
@@ -175,13 +175,13 @@ class ClientController extends LaravelClientController
      */
     public function destroy(Request $request, $clientId)
     {
-        $client =  $this->clients->find($clientId);
+        $client =  $this->clients->findForManagement($clientId);
 
         if (! $client) {
             return new Response('', 404);
         }
 
-        $this->clients->delete(
+        $this->clients->getRepository()->delete(
             $client
         );
     }
