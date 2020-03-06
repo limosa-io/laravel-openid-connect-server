@@ -81,15 +81,18 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
             new BearerTokenResponse
         );
 
+        $authCodeGrant = new AuthCodeGrant(
+            $this->app->make(AuthCodeRepository::class),
+            $this->app->make(RefreshTokenRepository::class),
+            $this->app->make(ClaimRepositoryInterface::class),
+            $this->app->make(Session::class),
+            new DateInterval('PT10M'),
+            new DateInterval('PT10M')
+        );
+        $authCodeGrant->setIssuer(url('/'));
+
         $server->enableGrantType(
-            new AuthCodeGrant(
-                $this->app->make(AuthCodeRepository::class),
-                $this->app->make(RefreshTokenRepository::class),
-                $this->app->make(ClaimRepositoryInterface::class),
-                $this->app->make(Session::class),
-                new DateInterval('PT10M'),
-                new DateInterval('PT10M')
-            )
+            $authCodeGrant
         );
 
         $server->enableGrantType(
