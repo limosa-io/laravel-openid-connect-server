@@ -18,6 +18,18 @@ class ClaimEntity implements ClaimEntityInterface
         $this->essential = $essential;
     }
 
+    public static function fromJson(array $json)
+    {
+        return new ClaimEntity($json['identifier'], $json['type'], $json['essential']);
+    }
+
+    public static function fromJsonArray(array $json)
+    {
+        return collect($json)->map(function ($value) {
+            return self::fromJson($value);
+        })->toArray();
+    }
+
     public function getIdentifier()
     {
         return $this->identifier;

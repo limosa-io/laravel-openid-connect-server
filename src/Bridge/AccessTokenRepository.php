@@ -13,7 +13,6 @@ class AccessTokenRepository extends LaravelAccessTokenRepository implements Acce
 {
     public function storeClaims(BridgeAccessToken $token, array $claims)
     {
-        
         $token = $this->tokenRepository->find($token->getIdentifier());
         $token->claims = $claims;
         $token->save();
@@ -23,13 +22,15 @@ class AccessTokenRepository extends LaravelAccessTokenRepository implements Acce
     {
         $token = $this->tokenRepository->find($id);
 
+        $claims = ClaimEntity::fromJsonArray($token->claims ?? []);
+
         return new AccessToken(
             $token->user_id,
             collect($token->scopes)->map(function ($scope) {
                 return new Scope($scope);
             })->toArray(),
             new Client('not used', 'not used', 'not used', false),
-            $token->claims ?? []
+            $claims
         );
     }
 }
