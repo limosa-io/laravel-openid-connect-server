@@ -12,6 +12,7 @@ use Laravel\Passport\Client;
 use Laravel\Passport\ClientRepository as LaravelClientRepository;
 use Laravel\Passport\Http\Controllers\AuthorizationController as LaravelAuthorizationController;
 use Laravel\Passport\TokenRepository;
+use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\RequestTypes\AuthorizationRequest;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -94,7 +95,7 @@ class AuthorizationController extends LaravelAuthorizationController
         }
 
         if ($authRequest == null) {
-            throw new OAuthServerException('No authorization request found. Seems like a cookie problem.', 400, 'unknown');
+            throw OAuthServerException::invalidRequest('unknown', 'No authorization request found. Seems like a cookie problem.');
         }
 
         $user = $request->user();
