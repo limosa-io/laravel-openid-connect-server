@@ -115,7 +115,7 @@ class RouteRegistrar extends LaravelRouteRegistrar
     public function forAccessTokens()
     {
         $this->router->post('/token', [
-            'uses' => 'AccessTokenController@issueToken',
+            'uses' => '\Idaas\Passport\Http\Controllers\AccessTokenController@issueToken',
             'middleware' => 'throttle',
         ])->name('oauth.token');
 
