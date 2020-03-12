@@ -13,6 +13,7 @@ use Idaas\Passport\Bridge\AccessTokenRepository;
 use Idaas\OpenID\Repositories\AccessTokenRepositoryInterface;
 use Idaas\Passport\Bridge\ClaimRepository;
 use Idaas\Passport\Bridge\UserRepository;
+use Idaas\Passport\Guards\TokenGuard;
 use Idaas\Passport\Model\Client;
 use Laravel\Passport\Bridge\AccessTokenRepository as BridgeAccessTokenRepository;
 use Laravel\Passport\Bridge\AuthCodeRepository;
@@ -22,6 +23,9 @@ use Laravel\Passport\ClientRepository as PassportClientRepository;
 use Laravel\Passport\PassportServiceProvider as LaravelPassportServiceProvider;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\ResourceServer;
+use Illuminate\Auth\RequestGuard;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Passport\TokenRepository;
 
 class PassportServiceProvider extends LaravelPassportServiceProvider
 {
@@ -115,5 +119,18 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
         $grant->disableRequireCodeChallengeForPublicClients();
 
         return $grant;
+    }
+
+    protected function makeGuard(array $config)
+    {
+        return new RequestGuard(function ($request) use ($config) {
+            return (new TokenGuard(
+                $this->app->make(ResourceServer::class),
+                Auth::createUserProvider($config['provider']),
+                $this->app->make(TokenRepository::class),
+                $this->app->make(ClientRepository::class),
+                $this->app->make('encrypter')
+            ))->user($request);
+        }, $this->app['request']);
     }
 }
