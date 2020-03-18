@@ -8,10 +8,11 @@ use Laravel\Passport\Bridge\AccessToken as BridgeAccessToken;
 use Laravel\Passport\Bridge\AccessTokenRepository as LaravelAccessTokenRepository;
 use Laravel\Passport\Bridge\Client;
 use Laravel\Passport\Bridge\Scope;
+use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 
 class AccessTokenRepository extends LaravelAccessTokenRepository implements AccessTokenRepositoryInterface
 {
-    public function storeClaims(BridgeAccessToken $token, array $claims)
+    public function storeClaims(AccessTokenEntityInterface $token, array $claims)
     {
         $token = $this->tokenRepository->find($token->getIdentifier());
         $token->claims = $claims;
