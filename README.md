@@ -13,6 +13,9 @@ This library is __work in progress__.
 laravel new
 composer require nl.idaas/laravel-openid-connect 
 touch ./.database.sqlite
+# In the .env file, ensure the following lines are present
+# DB_CONNECTION=sqlite
+# DB_DATABASE=./.database.sqlite
 php artisan migrate
 php artisan passport:install
 ~~~
