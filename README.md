@@ -9,4 +9,10 @@ This library is __work in progress__.
 
 ## Example
 
-TODO:
+~~~
+laravel new
+composer require nl.idaas/laravel-openid-connect 
+touch ./.database.sqlite
+php artisan migrate
+php artisan passport:install
+~~~
