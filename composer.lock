@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9412687bd84857edc1f5f7b2bdb6d536",
+    "content-hash": "2cc730562b22b92ec2566649ffb0ce51",
     "packages": [
         {
             "name": "defuse/php-encryption",
@@ -1394,11 +1394,17 @@
         },
         {
             "name": "nl.idaas/openid-server",
-            "version": "dev-master",
+            "version": "v0.1.0",
             "source": {
                 "type": "git",
-                "url": "/home/arie/git/ice-complete/openid-server",
+                "url": "https://github.com/arietimmerman/openid-connect-server.git",
                 "reference": "ca7aa252ad5d8040d7c5caaab5831abad120834e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/arietimmerman/openid-connect-server/zipball/ca7aa252ad5d8040d7c5caaab5831abad120834e",
+                "reference": "ca7aa252ad5d8040d7c5caaab5831abad120834e",
+                "shasum": ""
             },
             "require": {
                 "league/oauth2-server": "*"
@@ -1413,17 +1419,7 @@
                     "Idaas\\OpenID\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "IdaasTests\\": "tests/",
-                    "LeagueTests\\": "vendor/league/oauth2-server/tests/"
-                }
-            },
-            "scripts": {
-                "post-install-cmd": [
-                    "chmod 600 ./vendor/league/oauth2-server/tests/Stubs/private.key"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL-3.0-only"
             ],
@@ -4113,6 +4109,57 @@
             "time": "2020-01-16T09:16:38+00:00"
         },
         {
+            "name": "moontoast/math",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ramsey/moontoast-math.git",
+                "reference": "7d75ad4280aeeed89f863324a0c3d74a9670be82"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ramsey/moontoast-math/zipball/7d75ad4280aeeed89f863324a0c3d74a9670be82",
+                "reference": "7d75ad4280aeeed89f863324a0c3d74a9670be82",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "phpseclib/bcmath_compat": ">=1.0.3"
+            },
+            "require-dev": {
+                "jakub-onderka/php-parallel-lint": "^0.9.0",
+                "phpunit/phpunit": "^4.8 || ^5.5 || ^6.5 || ^7.0",
+                "satooshi/php-coveralls": "^0.6.1",
+                "squizlabs/php_codesniffer": "^2.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Moontoast\\Math\\": "src/Moontoast/Math",
+                    "Moontoast\\Math\\Exception\\": "src/Moontoast/Math/Exception"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Ben Ramsey",
+                    "email": "ben@benramsey.com",
+                    "homepage": "https://benramsey.com"
+                }
+            ],
+            "description": "A mathematics library, providing functionality for large numbers",
+            "homepage": "https://github.com/ramsey/moontoast-math",
+            "keywords": [
+                "bcmath",
+                "math"
+            ],
+            "abandoned": "brick/math",
+            "time": "2020-01-05T04:54:24+00:00"
+        },
+        {
             "name": "myclabs/deep-copy",
             "version": "1.x-dev",
             "source": {
@@ -4531,6 +4578,60 @@
             ],
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
             "time": "2020-02-14T12:50:24+00:00"
+        },
+        {
+            "name": "phpseclib/bcmath_compat",
+            "version": "1.0.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpseclib/bcmath_compat.git",
+                "reference": "f805922db4b3d8c1e174dafb74ac7374264e8880"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpseclib/bcmath_compat/zipball/f805922db4b3d8c1e174dafb74ac7374264e8880",
+                "reference": "f805922db4b3d8c1e174dafb74ac7374264e8880",
+                "shasum": ""
+            },
+            "require": {
+                "phpseclib/phpseclib": ">=2.0.19"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35|^5.7|^6.0",
+                "squizlabs/php_codesniffer": "^3.0"
+            },
+            "suggest": {
+                "ext-gmp": "Will enable faster math operations"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "lib/bcmath.php"
+                ],
+                "psr-4": {
+                    "bcmath_compat\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jim Wigginton",
+                    "email": "terrafrost@php.net",
+                    "homepage": "http://phpseclib.sourceforge.net"
+                }
+            ],
+            "description": "PHP 5.x/7.x polyfill for bcmath extension",
+            "keywords": [
+                "BigInteger",
+                "bcmath",
+                "bigdecimal",
+                "math",
+                "polyfill"
+            ],
+            "time": "2020-01-10T11:44:43+00:00"
         },
         {
             "name": "phpspec/prophecy",
