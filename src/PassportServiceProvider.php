@@ -15,6 +15,7 @@ use Idaas\Passport\Bridge\ClaimRepository;
 use Idaas\Passport\Bridge\UserRepository;
 use Idaas\Passport\Guards\TokenGuard;
 use Idaas\Passport\Model\Client;
+use Idaas\Passport\Model\PersonalAccessClient;
 use Laravel\Passport\Bridge\AccessTokenRepository as BridgeAccessTokenRepository;
 use Laravel\Passport\Bridge\AuthCodeRepository;
 use Laravel\Passport\Bridge\RefreshTokenRepository;
@@ -35,9 +36,14 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
         return Client::class;
     }
 
+    protected function getPersonalAccessClientModel(){
+        return PersonalAccessClient::class;
+    }
+
     public function boot()
     {
         Passport::useClientModel($this->getClientModel());
+        Passport::usePersonalAccessClientModel($this->getPersonalAccessClientModel());
         // Passport::useTokenModel()
 
         parent::boot();
@@ -132,5 +138,14 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
                 $this->app->make('encrypter')
             ))->user($request);
         }, $this->app['request']);
+    }
+
+    protected function registerMigrations()
+    {
+        parent::registerMigrations();
+        
+        if (Passport::$runsMigrations) {
+            return $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        }
     }
 }

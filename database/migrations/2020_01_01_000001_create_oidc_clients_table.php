@@ -16,7 +16,6 @@ class CreateOidcClientsTable extends Migration
         Schema::create('oidc_clients', function (Blueprint $table) {
 
             $table->uuid('client_id')->primary();
-            $table->uuid('tenant_id');
 
             // TODO: not used??
             $table->uuid('user_id')->index()->nullable();
