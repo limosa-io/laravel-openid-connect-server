@@ -6,3 +6,7 @@ services:
       - "127.0.0.1:18124:8000"
     volumes:
       - .:/laravel-openid-connect
+  op-test:
+    image: openidcertification/op_test
+    ports:
+      - "60000-60010:60000-60010"
