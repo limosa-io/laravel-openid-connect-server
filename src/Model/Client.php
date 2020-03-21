@@ -48,6 +48,11 @@ class Client extends LaravelClient
         });
     }
     
+    public function getIdAttribute()
+    {
+        return $this->client_id;
+    }
+
     // Ensure compatability with the default OAuth client
     public function getClientNameAttribute()
     {

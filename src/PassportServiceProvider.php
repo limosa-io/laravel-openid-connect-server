@@ -65,6 +65,8 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
                 __DIR__ . '/../examples/App/User.php' => app_path('User.php'),
                 __DIR__ . '/../examples/App/Providers/AuthServiceProvider.php' =>
                 app_path('Providers/AuthServiceProvider.php'),
+                __DIR__ . '/../examples/config/auth.php' =>
+                config_path('auth.php'),
             ]
         );
     }
