@@ -1,0 +1,8 @@
+version: '3'
+services:
+  laravel-openid-connect:
+    build: .
+    ports:
+      - "127.0.0.1:18124:8000"
+    volumes:
+      - .:/laravel-openid-connect

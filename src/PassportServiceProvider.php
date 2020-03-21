@@ -59,6 +59,14 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
         $this->app->singleton(BridgeAccessTokenRepository::class, function ($app) {
             return $app->make(AccessTokenRepositoryInterface::class);
         });
+
+        $this->publishes(
+            [
+                __DIR__ . '/../examples/App/User.php' => app_path('User.php'),
+                __DIR__ . '/../examples/App/Providers/AuthServiceProvider.php' =>
+                app_path('Providers/AuthServiceProvider.php'),
+            ]
+        );
     }
 
     protected function makeCryptKey($type)
