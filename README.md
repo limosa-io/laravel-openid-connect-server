@@ -10,12 +10,8 @@ This library is __work in progress__.
 ## Example
 
 ~~~
-laravel new
-composer require nl.idaas/laravel-openid-connect 
-touch ./.database.sqlite
-# In the .env file, ensure the following lines are present
-# DB_CONNECTION=sqlite
-# DB_DATABASE=./.database.sqlite
-php artisan migrate
-php artisan passport:install
+docker-compose build
+docker-compose up -d
 ~~~
+
+Now find your `openid-configuration` at `http://localhost:18124/.well-known/openid-configuration`.
