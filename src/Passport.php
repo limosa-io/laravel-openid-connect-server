@@ -25,5 +25,13 @@ class Passport extends LaravelPassport
         Route::group($options, function ($router) use ($callback) {
             $callback(new RouteRegistrar($router));
         });
+
+        // The wellKnown endpoints must be registered without a prefix
+        Route::group([
+            'namespace' => '\Laravel\Passport\Http\Controllers'
+        ], function ($router) use ($callback) {
+            $router = new RouteRegistrar($router);
+            $router->forWellKnown();
+        });
     }
 }

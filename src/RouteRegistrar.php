@@ -6,6 +6,15 @@ use Laravel\Passport\RouteRegistrar as LaravelRouteRegistrar;
 
 class RouteRegistrar extends LaravelRouteRegistrar
 {
+
+    public function all()
+    {
+        parent::all();
+
+        $this->forUserinfo();
+        $this->forIntrospect();
+    }
+
     public function forAuthorization()
     {
         $this->router->group(['middleware' => ['web']], function ($router) {
@@ -39,15 +48,6 @@ class RouteRegistrar extends LaravelRouteRegistrar
             $this->router->post('/revoke', [
                 'uses' => '\Idaas\Passport\RevokeController@index',
             ])->name('oauth.revoke');
-        });
-    }
-
-    public function forLogout()
-    {
-        $this->router->group(['middleware' => ['web']], function ($router) {
-            $router->get('/logout', [
-                'uses' => '\Idaas\Passport\SessionManagementController@logout',
-            ])->name('oidc.logout');
         });
     }
 
