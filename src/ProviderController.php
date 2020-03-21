@@ -49,7 +49,7 @@ class ProviderController extends BaseController
     {
 
         $crypt = resolve(KeyRepository::class)->getPublicKey();
-
+        
         $key = $crypt->x509;
         
         $key = str_replace(array('-----BEGIN CERTIFICATE-----','-----END CERTIFICATE-----',"\r", "\n", " "), "", $key);
