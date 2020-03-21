@@ -9,8 +9,7 @@ class ProviderController extends BaseController
 {
     protected function toWebSafe($base64)
     {
-        return str_replace(array('+','/','='), array('-','_',''), $base64);
-        ;
+        return str_replace(array('+', '/', '='), array('-', '_', ''), $base64);;
     }
     protected function base64WebSafe($input)
     {
@@ -47,28 +46,34 @@ class ProviderController extends BaseController
 
     public function jwks(ProviderRepository $providerRepository)
     {
-
         $crypt = resolve(KeyRepository::class)->getPublicKey();
-        
-        $key = $crypt->x509;
-        
-        $key = str_replace(array('-----BEGIN CERTIFICATE-----','-----END CERTIFICATE-----',"\r", "\n", " "), "", $key);
-        $keyForParsing = "-----BEGIN CERTIFICATE-----\n".chunk_split($key, 64, "\n")."-----END CERTIFICATE-----\n";
 
-        $result = openssl_pkey_get_details(openssl_pkey_get_public(openssl_x509_read($keyForParsing)));
-        
+        $result = [
+            'alg' => 'RS256',
+            'kty' => 'RSA',
+            'use' => 'sig',
+            'kid' => $crypt->kid ?? 1
+        ];
+
+        if (!empty($crypt->x509)) {
+            $key = $crypt->x509;
+            $key = str_replace(array('-----BEGIN CERTIFICATE-----', '-----END CERTIFICATE-----', "\r", "\n", " "), "", $key);
+            $keyForParsing = "-----BEGIN CERTIFICATE-----\n" . chunk_split($key, 64, "\n") . "-----END CERTIFICATE-----\n";
+
+            $pkey = openssl_pkey_get_details(openssl_pkey_get_public(openssl_x509_read($keyForParsing)));
+
+            $result['x5c'] = $this->toWebSafe($pkey);
+            $result['x5t'] = $this->base64WebSafe(openssl_x509_fingerprint($keyForParsing, 'sha1', true));
+        } else {
+            $pkey = openssl_pkey_get_details(openssl_pkey_get_public($crypt->getKeyPath()));
+        }
+
+        $result['n'] = $this->base64WebSafe($pkey['rsa']['n']);
+        $result['e'] = $this->base64WebSafe($pkey['rsa']['e']);
+
         return [
             'keys' => [
-                [
-                    'alg' => 'RS256',
-                    'kty' => 'RSA',
-                    'use' => 'sig',
-                    'x5c' => $this->toWebSafe($key),
-                    'n' => $this->base64WebSafe($result['rsa']['n']),
-                    'e' => $this->base64WebSafe($result['rsa']['e']),
-                    'kid' => $crypt->kid,
-                    'x5t' => $this->base64WebSafe(openssl_x509_fingerprint($keyForParsing, 'sha1', true))
-                ]
+                $result
             ]
         ];
     }
