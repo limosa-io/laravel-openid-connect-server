@@ -36,7 +36,8 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
         return Client::class;
     }
 
-    protected function getPersonalAccessClientModel(){
+    protected function getPersonalAccessClientModel()
+    {
         return PersonalAccessClient::class;
     }
 
@@ -143,9 +144,9 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
     protected function registerMigrations()
     {
         parent::registerMigrations();
-        
+
         if (Passport::$runsMigrations) {
-            return $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+            return $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         }
     }
 }
