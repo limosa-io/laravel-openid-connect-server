@@ -3,10 +3,19 @@ services:
   laravel-openid-connect:
     build: .
     ports:
-      - "127.0.0.1:18124:8000"
+      - "127.0.0.1:8000:8000"
     volumes:
       - .:/laravel-openid-connect
+    environment:
+      - APP_URL=http://laravel-openid-connect:8000
+    networks:
+      - default
   op-test:
     image: openidcertification/op_test
     ports:
       - "60000-60010:60000-60010"
+    networks:
+      - default
+
+networks:
+  default:
