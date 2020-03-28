@@ -1,3 +1,4 @@
+
 version: '3'
 services:
   laravel-openid-connect:
@@ -10,8 +11,22 @@ services:
       - APP_URL=http://laravel-openid-connect:8000
     networks:
       - default
+  caddy:
+    image: caddy/caddy
+    ports:
+      - "1443:1443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./docker:/docker
+    networks:
+      default:
+        aliases:
+          - openid-connect.test
   op-test:
     image: openidcertification/op_test
+    entrypoint: bash -c "update-ca-certificates && ./run.sh"
+    volumes:
+      - ./docker:/usr/local/share/ca-certificates/docker
     ports:
       - "60000-60010:60000-60010"
     networks:

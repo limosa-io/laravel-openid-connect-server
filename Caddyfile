@@ -1,0 +1,5 @@
+:1443
+
+reverse_proxy laravel-openid-connect:8000
+
+tls /docker/openid-connect.test.crt /docker/openid-connect.test.key
