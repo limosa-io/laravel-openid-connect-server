@@ -44,6 +44,16 @@ class ProviderController extends BaseController
         return $result;
     }
 
+    public static function pem2der($pem_data)
+    {
+        $begin = "CERTIFICATE-----";
+        $end   = "-----END";
+        $pem_data = substr($pem_data, strpos($pem_data, $begin) + strlen($begin));
+        $pem_data = substr($pem_data, 0, strpos($pem_data, $end));
+        $der = base64_decode($pem_data);
+        return $der;
+    }
+
     public function jwks(ProviderRepository $providerRepository)
     {
         $crypt = resolve(KeyRepository::class)->getPublicKey();
@@ -62,8 +72,14 @@ class ProviderController extends BaseController
 
             $pkey = openssl_pkey_get_details(openssl_pkey_get_public(openssl_x509_read($keyForParsing)));
 
-            $result['x5c'] = $this->toWebSafe($pkey);
-            $result['x5t'] = $this->base64WebSafe(openssl_x509_fingerprint($keyForParsing, 'sha1', true));
+            // Do not use x5c and x5t for now
+            // $result['x5c'] = [
+            //     self::pem2der($this->toWebSafe($pkey))
+            // ];
+            // $result['x5t'] = [
+            //     $this->base64WebSafe(openssl_x509_fingerprint($keyForParsing, 'sha1', true))
+            // ];
+
         } else {
             $pkey = openssl_pkey_get_details(openssl_pkey_get_public($crypt->getKeyPath()));
         }
