@@ -15,6 +15,7 @@ use Idaas\Passport\PassportServiceProvider;
 use Illuminate\Config\Repository;
 use Illuminate\Foundation\Auth\User;
 use Laravel\Passport\Bridge\AccessToken;
+use Laravel\Passport\Bridge\Scope;
 use Laravel\Passport\HasApiTokens;
 use Mockery as m;
 use Laravel\Passport\Tests\Feature\PassportTestCase;
@@ -90,7 +91,9 @@ class UserinfoControllerTest extends PassportTestCase
             ->canOnlyBeUsedAfter(\time())
             ->expiresAt((new DateTime("+7 day"))->getTimestamp())
             ->relatedTo('user-id-1234')
-            ->withClaim('scopes', ['openid'])
+            ->withClaim('scopes', [
+                new Scope('openid')
+            ])
             ->withClaim('claims', ['claim1'])
             ->getToken(new Sha256(), new Key($keyRepository->getPrivateKey()->getKeyPath(), null));
 
