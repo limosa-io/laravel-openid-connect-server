@@ -1453,12 +1453,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/arietimmerman/openid-connect-server.git",
-                "reference": "e1dc903af91fa8025a04135caee01f263192acc5"
+                "reference": "50fa3587d391435ba867d5aaacb8d44cbd7839a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/arietimmerman/openid-connect-server/zipball/e1dc903af91fa8025a04135caee01f263192acc5",
-                "reference": "e1dc903af91fa8025a04135caee01f263192acc5",
+                "url": "https://api.github.com/repos/arietimmerman/openid-connect-server/zipball/50fa3587d391435ba867d5aaacb8d44cbd7839a5",
+                "reference": "50fa3587d391435ba867d5aaacb8d44cbd7839a5",
                 "shasum": ""
             },
             "require": {
@@ -1485,7 +1485,7 @@
                 }
             ],
             "description": "OpenID Connect server for PHP",
-            "time": "2020-03-18T21:05:31+00:00"
+            "time": "2020-04-13T07:12:29+00:00"
         },
         {
             "name": "nyholm/psr7",
