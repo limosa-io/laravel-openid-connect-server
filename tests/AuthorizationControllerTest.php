@@ -142,6 +142,7 @@ class AuthorizationControllerTest extends TestCase
 
         $user = m::mock(Authenticatable::class);
         $user->shouldReceive('getKey')->andReturn('test');
+        $user->shouldReceive('getAuthIdentifier')->andReturn('test');
 
         $request = m::mock(Request::class);
         $request->shouldReceive('user')->andReturn($user);

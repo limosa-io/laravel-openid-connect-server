@@ -4,6 +4,7 @@ namespace IdaasPassportTests;
 
 use Idaas\OpenID\Entities\Traits\AccessTokenTrait;
 use Laravel\Passport\Bridge\AccessToken;
+use Laravel\Passport\Bridge\Scope;
 
 class AccessTokenEntity extends AccessToken
 {
@@ -17,6 +18,8 @@ class AccessTokenEntity extends AccessToken
 
     public function getScopes()
     {
-        return ['openid'];
+        return [
+            new Scope('openid')
+        ];
     }
 }
