@@ -3,6 +3,7 @@
 namespace Idaas\Passport\Bridge;
 
 use Idaas\OpenID\Repositories\ClaimRepositoryInterface;
+use League\OAuth2\Server\Entities\ScopeEntityInterface;
 
 class ClaimRepository implements ClaimRepositoryInterface
 {
@@ -24,8 +25,10 @@ class ClaimRepository implements ClaimRepositoryInterface
         return new ClaimEntity($identifier, $type, $essential);
     }
 
-    public function getClaimsByScope(string $scope): iterable
+    public function getClaimsByScope(ScopeEntityInterface $scope): iterable
     {
+        $scope = $scope->getIdentifier();
+        
         $result = [];
 
         $map = $this->getScopeClaims();

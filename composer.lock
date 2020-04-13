@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "892db65210236f74fc5e19ae4a9793ea",
+    "content-hash": "105b9b0afe282ddbee5381629699ff13",
     "packages": [
         {
             "name": "brick/math",
@@ -736,12 +736,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "d1a29062db781b1326963a61d75c3cb8bb2de932"
+                "reference": "3fc834d9a12b68579e3e1b9899dbbd8e91446054"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/d1a29062db781b1326963a61d75c3cb8bb2de932",
-                "reference": "d1a29062db781b1326963a61d75c3cb8bb2de932",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/3fc834d9a12b68579e3e1b9899dbbd8e91446054",
+                "reference": "3fc834d9a12b68579e3e1b9899dbbd8e91446054",
                 "shasum": ""
             },
             "require": {
@@ -879,7 +879,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-04-11T13:01:43+00:00"
+            "time": "2020-04-12T08:20:36+00:00"
         },
         {
             "name": "laravel/passport",
@@ -1015,12 +1015,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "3ef5c7d2ae665ed61a517e9ae6073acb93a2f528"
+                "reference": "429f742c8df0940c613e6b9902ffc70ed06bd416"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/3ef5c7d2ae665ed61a517e9ae6073acb93a2f528",
-                "reference": "3ef5c7d2ae665ed61a517e9ae6073acb93a2f528",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/429f742c8df0940c613e6b9902ffc70ed06bd416",
+                "reference": "429f742c8df0940c613e6b9902ffc70ed06bd416",
                 "shasum": ""
             },
             "require": {
@@ -1081,7 +1081,7 @@
                 "md",
                 "parser"
             ],
-            "time": "2020-04-11T20:30:33+00:00"
+            "time": "2020-04-12T21:55:41+00:00"
         },
         {
             "name": "league/event",
@@ -2397,12 +2397,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "619054da7627df1c2169c7aabe0df78f9320847c"
+                "reference": "38e523fdbea8953cc4cf58f2faeef32f0aaba722"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/619054da7627df1c2169c7aabe0df78f9320847c",
-                "reference": "619054da7627df1c2169c7aabe0df78f9320847c",
+                "url": "https://api.github.com/repos/symfony/console/zipball/38e523fdbea8953cc4cf58f2faeef32f0aaba722",
+                "reference": "38e523fdbea8953cc4cf58f2faeef32f0aaba722",
                 "shasum": ""
             },
             "require": {
@@ -2468,7 +2468,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2020-04-05T07:04:12+00:00"
+            "time": "2020-04-12T12:38:26+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -2575,12 +2575,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/error-handler.git",
-                "reference": "29ef74d2758ec03778c1d82c4b2fc98537311eb2"
+                "reference": "948260b0c4c846138b6b0ad9423291acbbf08fa8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/error-handler/zipball/29ef74d2758ec03778c1d82c4b2fc98537311eb2",
-                "reference": "29ef74d2758ec03778c1d82c4b2fc98537311eb2",
+                "url": "https://api.github.com/repos/symfony/error-handler/zipball/948260b0c4c846138b6b0ad9423291acbbf08fa8",
+                "reference": "948260b0c4c846138b6b0ad9423291acbbf08fa8",
                 "shasum": ""
             },
             "require": {
@@ -2590,6 +2590,7 @@
                 "symfony/var-dumper": "^4.4|^5.0"
             },
             "require-dev": {
+                "symfony/deprecation-contracts": "^2.1",
                 "symfony/http-kernel": "^4.4|^5.0",
                 "symfony/serializer": "^4.4|^5.0"
             },
@@ -2623,7 +2624,7 @@
             ],
             "description": "Symfony ErrorHandler Component",
             "homepage": "https://symfony.com",
-            "time": "2020-03-30T14:22:57+00:00"
+            "time": "2020-04-06T10:56:40+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -2871,12 +2872,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-kernel.git",
-                "reference": "ac1b2b8f44584b738453ec06a9feb598d04dbd23"
+                "reference": "e61bc2c6ce03ca5ed52fdbc0cd8732ebf7109196"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/ac1b2b8f44584b738453ec06a9feb598d04dbd23",
-                "reference": "ac1b2b8f44584b738453ec06a9feb598d04dbd23",
+                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/e61bc2c6ce03ca5ed52fdbc0cd8732ebf7109196",
+                "reference": "e61bc2c6ce03ca5ed52fdbc0cd8732ebf7109196",
                 "shasum": ""
             },
             "require": {
@@ -2962,7 +2963,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
-            "time": "2020-04-06T10:46:53+00:00"
+            "time": "2020-04-12T16:48:26+00:00"
         },
         {
             "name": "symfony/mime",
@@ -3569,12 +3570,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "6cdb2d553dba09e6fdb7d6f47f9c741d4dcd980a"
+                "reference": "05496004157578164e72aa3bf1078cc4a1ab5e08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/6cdb2d553dba09e6fdb7d6f47f9c741d4dcd980a",
-                "reference": "6cdb2d553dba09e6fdb7d6f47f9c741d4dcd980a",
+                "url": "https://api.github.com/repos/symfony/process/zipball/05496004157578164e72aa3bf1078cc4a1ab5e08",
+                "reference": "05496004157578164e72aa3bf1078cc4a1ab5e08",
                 "shasum": ""
             },
             "require": {
@@ -3611,7 +3612,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2020-04-10T21:23:06+00:00"
+            "time": "2020-04-12T16:56:52+00:00"
         },
         {
             "name": "symfony/psr-http-message-bridge",
@@ -3683,12 +3684,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/routing.git",
-                "reference": "8b97327ddc05ed23fbf117e8409d1872941992bf"
+                "reference": "3ff0f4d434a3a616df887834bac55c727d03266a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/routing/zipball/8b97327ddc05ed23fbf117e8409d1872941992bf",
-                "reference": "8b97327ddc05ed23fbf117e8409d1872941992bf",
+                "url": "https://api.github.com/repos/symfony/routing/zipball/3ff0f4d434a3a616df887834bac55c727d03266a",
+                "reference": "3ff0f4d434a3a616df887834bac55c727d03266a",
                 "shasum": ""
             },
             "require": {
@@ -3753,7 +3754,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2020-04-06T10:46:53+00:00"
+            "time": "2020-04-12T11:07:37+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -3889,12 +3890,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "74fc47fc130f1ff96f93dff4716da29d4b1fc8fd"
+                "reference": "d642c61d39e41d7158f0990f41ba71ebc2c41011"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/74fc47fc130f1ff96f93dff4716da29d4b1fc8fd",
-                "reference": "74fc47fc130f1ff96f93dff4716da29d4b1fc8fd",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/d642c61d39e41d7158f0990f41ba71ebc2c41011",
+                "reference": "d642c61d39e41d7158f0990f41ba71ebc2c41011",
                 "shasum": ""
             },
             "require": {
@@ -3959,7 +3960,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2020-04-05T07:04:12+00:00"
+            "time": "2020-04-12T16:48:26+00:00"
         },
         {
             "name": "symfony/translation-contracts",
@@ -4024,12 +4025,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "f527afe6e7e1cf6de1dd74b8bd6c66e1b20919b1"
+                "reference": "3cbcbf81432f28fcbed91f41de75bd2547d70535"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/f527afe6e7e1cf6de1dd74b8bd6c66e1b20919b1",
-                "reference": "f527afe6e7e1cf6de1dd74b8bd6c66e1b20919b1",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/3cbcbf81432f28fcbed91f41de75bd2547d70535",
+                "reference": "3cbcbf81432f28fcbed91f41de75bd2547d70535",
                 "shasum": ""
             },
             "require": {
@@ -4092,7 +4093,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2020-04-06T22:58:33+00:00"
+            "time": "2020-04-12T16:48:26+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -4149,12 +4150,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "f16100e09f780af1b6d661f42c6e8e9be9b8e5a0"
+                "reference": "feb6dad5ae24b1380827aee1629b730080fde500"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/f16100e09f780af1b6d661f42c6e8e9be9b8e5a0",
-                "reference": "f16100e09f780af1b6d661f42c6e8e9be9b8e5a0",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/feb6dad5ae24b1380827aee1629b730080fde500",
+                "reference": "feb6dad5ae24b1380827aee1629b730080fde500",
                 "shasum": ""
             },
             "require": {
@@ -4205,7 +4206,7 @@
                 "env",
                 "environment"
             ],
-            "time": "2020-04-11T10:18:22+00:00"
+            "time": "2020-04-12T15:20:09+00:00"
         },
         {
             "name": "voku/portable-ascii",
@@ -5219,12 +5220,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "db77849cd7061305f0dcce58e823186d566af08e"
+                "reference": "7b52d012ed51c722f6e427ed31d0cd3c4f87fa07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/db77849cd7061305f0dcce58e823186d566af08e",
-                "reference": "db77849cd7061305f0dcce58e823186d566af08e",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7b52d012ed51c722f6e427ed31d0cd3c4f87fa07",
+                "reference": "7b52d012ed51c722f6e427ed31d0cd3c4f87fa07",
                 "shasum": ""
             },
             "require": {
@@ -5294,7 +5295,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2020-04-10T12:37:58+00:00"
+            "time": "2020-04-13T06:50:02+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

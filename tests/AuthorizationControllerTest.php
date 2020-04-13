@@ -134,6 +134,7 @@ class AuthorizationControllerTest extends TestCase
 
         $client = m::mock(ClientEntityInterface::class);
         $client->shouldReceive('getIdentifier')->andReturn('test');
+        $client->shouldReceive('isConfidential')->andReturn(true);
 
         $authenticationRequest->shouldReceive('getClient')->andReturn(
             $client
