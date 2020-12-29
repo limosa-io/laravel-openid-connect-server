@@ -8,7 +8,7 @@
             "email": "arietimmerman@a11n.nl"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "Idaas\\Passport\\": "src/"
@@ -28,7 +28,7 @@
         }
     },
     "require": {
-        "nl.idaas/openid-server": ">=0.1.4",
+        "nl.idaas/openid-server": "*",
         "laravel/passport": "*"
     },
     "require-dev": {

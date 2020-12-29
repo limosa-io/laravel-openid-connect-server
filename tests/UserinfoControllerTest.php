@@ -2,33 +2,23 @@
 
 namespace IdaasPassportTests;
 
-use DateTime;
-use Idaas\OpenID\Repositories\AccessTokenRepositoryInterface;
-use Idaas\OpenID\Repositories\AccessTokenRepositoryInterface as IdaasAccessTokenRepositoryInterface;
-use Idaas\OpenID\Repositories\ClaimRepositoryInterface;
-use Idaas\OpenID\Repositories\UserRepositoryInterface;
-use Idaas\Passport\Bridge\ClaimRepository;
-use Idaas\Passport\Bridge\UserRepository;
+use DateTimeImmutable;
 use Idaas\Passport\KeyRepository;
 use Idaas\Passport\Passport;
 use Idaas\Passport\PassportServiceProvider;
 use Illuminate\Config\Repository;
 use Illuminate\Foundation\Auth\User;
-use Laravel\Passport\Bridge\AccessToken;
 use Laravel\Passport\Bridge\Scope;
 use Laravel\Passport\HasApiTokens;
+use Lcobucci\JWT\Signer;
 use Mockery as m;
 use Laravel\Passport\Tests\Feature\PassportTestCase;
-use Lcobucci\JWT\Builder;
-use Lcobucci\JWT\Parser;
-use Lcobucci\JWT\Signer\Key;
-use Lcobucci\JWT\Signer\Rsa\Sha256;
+use Lcobucci\JWT\Configuration;
+use Lcobucci\JWT\Signer\Key\LocalFileReference;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
-use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface as LeagueAccessTokenRepositoryInterface;
 
 class UserinfoControllerTest extends PassportTestCase
 {
-
     protected function getPackageProviders($app)
     {
         return [PassportServiceProvider::class];
@@ -81,21 +71,30 @@ class UserinfoControllerTest extends PassportTestCase
 
     public function testUserinfoBasic()
     {
-
         $keyRepository = new KeyRepository();
 
-        $token = (string) (new Builder())
-            ->permittedFor('client')
-            ->identifiedBy('1234')
-            ->issuedAt(\time())
-            ->canOnlyBeUsedAfter(\time())
-            ->expiresAt((new DateTime("+7 day"))->getTimestamp())
-            ->relatedTo('user-id-1234')
+        $configuration = Configuration::forAsymmetricSigner(
+            // You may use RSA or ECDSA and all their variations (256, 384, and 512)
+            new Signer\Rsa\Sha256(),
+            LocalFileReference::file($keyRepository->getPrivateKey()->getKeyPath()),
+            LocalFileReference::file($keyRepository->getPrivateKey()->getKeyPath())
+            // You may also override the JOSE encoder/decoder if needed by providing extra arguments here
+        );
+
+        $token = $configuration->builder()
+            ->withHeader('kid', '123')
+            ->issuedBy('issuer')
+            ->identifiedBy('subject')
+            ->permittedFor('audience')
+            ->relatedTo('subject')
+            ->expiresAt(new DateTimeImmutable('+60 seconds'))
+            ->issuedAt(new DateTimeImmutable)
+            ->withClaim('auth_time', (new DateTimeImmutable)->getTimestamp())
+            ->withClaim('nonce', 'nonce')
             ->withClaim('scopes', [
                 new Scope('openid')
             ])
-            ->withClaim('claims', ['claim1'])
-            ->getToken(new Sha256(), new Key($keyRepository->getPrivateKey()->getKeyPath(), null));
+            ->getToken($configuration->signer(), $configuration->signingKey())->toString();
 
         $result = $this->get('/oauth/userinfo', [
             'Authorization' => $token

@@ -26,14 +26,16 @@ use Laravel\Passport\Http\Controllers\AccessTokenController;
 use Laravel\Passport\Passport;
 use Laravel\Passport\Token;
 use Laravel\Passport\TokenRepository;
-use Lcobucci\JWT\Parser;
+use Lcobucci\JWT\Encoding\JoseEncoder;
+use Lcobucci\JWT\Token\Parser;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use Mockery as m;
-use PHPUnit\Framework\TestCase;
+
 use Psr\Http\Message\ServerRequestInterface;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface as LeagueAccessTokenRepositoryInterface;
 use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
+use Orchestra\Testbench\TestCase;
 
 class AuthorizationControllerTest extends TestCase
 {
@@ -181,7 +183,7 @@ class AuthorizationControllerTest extends TestCase
         parse_str($parsed['query'], $parseStr);
         $this->assertArrayHasKey('code', $parseStr);
 
-        $controller = new AccessTokenController($server, $tokens, new Parser());
+        $controller = new AccessTokenController($server, $tokens, new Parser(new JoseEncoder()));
 
         $serverRequest = m::mock(ServerRequestInterface::class);
         $serverRequest->shouldReceive('getParsedBody')->andReturn([

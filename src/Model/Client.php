@@ -39,7 +39,7 @@ class Client extends LaravelClient
 
     protected $appends = ['client_name'];
 
-    protected static function boot()
+    public static function boot()
     {
         parent::boot();
 

@@ -19,7 +19,7 @@ class ClientRepository extends LaravelClientRepository
         return $client::find($id);
     }
 
-    public function create($userId, $name, $redirect, $personalAccess = false, $password = false, $confidential = true)
+    public function create($userId, $name, $redirect, $provider = null, $personalAccess = false, $password = false, $confidential = true)
     {
         $client = Passport::client()->forceFill([
             'user_id' => $userId,
