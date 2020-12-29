@@ -56,11 +56,6 @@ class AuthorizationControllerTest extends TestCase
         );
 
         Passport::loadKeysFrom(__DIR__ . '/files');
-
-        $keys = KeyRepository::generateNew();
-        file_put_contents(__DIR__ . '/files/oauth-private.key', $keys['private_key']);
-        file_put_contents(__DIR__ . '/files/oauth-public.key', $keys['public_key']);
-
         $client  = m::mock(ClientEntityInterface::class);
         $client->shouldReceive('getRedirectUri')->andReturn('https://test123.nl');
         $client->shouldReceive('isConfidential')->andReturn(false);
