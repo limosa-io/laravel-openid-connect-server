@@ -31,14 +31,20 @@ use Lcobucci\JWT\Token\Parser;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use Mockery as m;
+use Laravel\Passport\Tests\Feature\PassportTestCase;
 
 use Psr\Http\Message\ServerRequestInterface;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface as LeagueAccessTokenRepositoryInterface;
 use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
-use Orchestra\Testbench\TestCase;
 
-class AuthorizationControllerTest extends TestCase
+class AuthorizationControllerTest extends PassportTestCase
 {
+    protected function setUp(): void
+    {
+        Passport::loadKeysFrom(__DIR__ . '/files');
+        parent::setUp();
+    }
+    
     protected function tearDown(): void
     {
         m::close();
@@ -54,9 +60,7 @@ class AuthorizationControllerTest extends TestCase
         $clients->shouldReceive('find')->andReturn(
             $client = new Client([])
         );
-
-        print_r(scandir(__DIR__ . '/files'));
-        Passport::loadKeysFrom(__DIR__ . '/files');
+        
         $client  = m::mock(ClientEntityInterface::class);
         $client->shouldReceive('getRedirectUri')->andReturn('https://test123.nl');
         $client->shouldReceive('isConfidential')->andReturn(false);
