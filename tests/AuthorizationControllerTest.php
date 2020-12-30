@@ -55,6 +55,7 @@ class AuthorizationControllerTest extends TestCase
             $client = new Client([])
         );
 
+        print_r(scandir(__DIR__ . '/files'));
         Passport::loadKeysFrom(__DIR__ . '/files');
         $client  = m::mock(ClientEntityInterface::class);
         $client->shouldReceive('getRedirectUri')->andReturn('https://test123.nl');
