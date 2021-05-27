@@ -9,6 +9,15 @@ This is an OpenID Connect Server written in PHP, built on top of [arietimmerman/
 
 This library is __work in progress__.
 
+## Installation
+
+~~~
+composer require nl.idaas/laravel-openid-connect
+php artisan migrate
+php artisan passport:install
+php artisan vendor:publish --provider="Idaas\Passport\PassportServiceProvider" --force
+~~~
+
 ## Example
 
 ~~~
