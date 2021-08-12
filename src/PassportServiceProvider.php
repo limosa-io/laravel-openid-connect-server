@@ -26,6 +26,7 @@ use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\ResourceServer;
 use Illuminate\Auth\RequestGuard;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Passport\PassportUserProvider;
 use Laravel\Passport\TokenRepository;
 
 class PassportServiceProvider extends LaravelPassportServiceProvider
@@ -139,7 +140,7 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
         return new RequestGuard(function ($request) use ($config) {
             return (new TokenGuard(
                 $this->app->make(ResourceServer::class),
-                Auth::createUserProvider($config['provider']),
+                new PassportUserProvider(Auth::createUserProvider($config['provider']), 'users'),
                 $this->app->make(TokenRepository::class),
                 $this->app->make(ClientRepository::class),
                 $this->app->make('encrypter')
