@@ -2,6 +2,7 @@
 
 namespace IdaasPassportTests;
 
+use DateTime;
 use DateTimeImmutable;
 use Idaas\Passport\KeyRepository;
 use Idaas\Passport\Passport;
@@ -10,11 +11,11 @@ use Illuminate\Config\Repository;
 use Illuminate\Foundation\Auth\User;
 use Laravel\Passport\Bridge\Scope;
 use Laravel\Passport\HasApiTokens;
-use Lcobucci\JWT\Signer;
 use Mockery as m;
 use Laravel\Passport\Tests\Feature\PassportTestCase;
 use Lcobucci\JWT\Configuration;
-use Lcobucci\JWT\Signer\Key\LocalFileReference;
+use Lcobucci\JWT\Signer\Key\InMemory;
+use Lcobucci\JWT\Signer\Rsa\Sha256;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 
 class UserinfoControllerTest extends PassportTestCase
@@ -73,28 +74,25 @@ class UserinfoControllerTest extends PassportTestCase
     {
         $keyRepository = new KeyRepository();
 
-        $configuration = Configuration::forAsymmetricSigner(
-            // You may use RSA or ECDSA and all their variations (256, 384, and 512)
-            new Signer\Rsa\Sha256(),
-            LocalFileReference::file($keyRepository->getPrivateKey()->getKeyPath()),
-            LocalFileReference::file($keyRepository->getPrivateKey()->getKeyPath())
-            // You may also override the JOSE encoder/decoder if needed by providing extra arguments here
+        $config = Configuration::forAsymmetricSigner(
+            new Sha256(),
+            InMemory::plainText($keyRepository->getPrivateKey()->getKeyContents()),
+            InMemory::plainText($keyRepository->getPrivateKey()->getKeyContents())
         );
 
-        $token = $configuration->builder()
-            ->withHeader('kid', '123')
-            ->issuedBy('issuer')
-            ->identifiedBy('subject')
-            ->permittedFor('audience')
-            ->relatedTo('subject')
-            ->expiresAt(new DateTimeImmutable('+60 seconds'))
-            ->issuedAt(new DateTimeImmutable)
-            ->withClaim('auth_time', (new DateTimeImmutable)->getTimestamp())
-            ->withClaim('nonce', 'nonce')
+        $token = $config->builder()
+            ->permittedFor('client')
+            ->identifiedBy('1234')
+            ->issuedAt(new DateTimeImmutable())
+            ->canOnlyBeUsedAfter(new DateTimeImmutable())
+            ->expiresAt(DateTimeImmutable::createFromMutable(new DateTime("+7 day")))
+            ->relatedTo('user-id-1234')
             ->withClaim('scopes', [
                 new Scope('openid')
             ])
-            ->getToken($configuration->signer(), $configuration->signingKey())->toString();
+            ->withClaim('claims', ['claim1'])
+            ->getToken($config->signer(), $config->signingKey())
+            ->toString();
 
         $result = $this->get('/oauth/userinfo', [
             'Authorization' => $token

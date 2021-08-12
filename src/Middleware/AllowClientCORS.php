@@ -1,6 +1,6 @@
 <?php
 
-namespace Idaas\Passport\OIDC\Middleware;
+namespace Idaas\Passport\Middleware;
 
 use Closure;
 use League\OAuth2\Server\ResourceServer;
