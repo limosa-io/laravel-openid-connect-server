@@ -24,6 +24,11 @@ class UserRepository extends LaravelUserRepository implements UserRepositoryInte
         ];
     }
 
+    public function getUserInfoAttributes(UserEntityInterface $user, $claims, $scopes)
+    {
+        return $this->getAttributes($user, $claims, $scopes);
+    }
+
     public function getUserByIdentifier($identifier) : ?UserEntityInterface
     {
         $provider = config('auth.guards.api.provider');
