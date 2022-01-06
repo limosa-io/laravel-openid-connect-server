@@ -76,8 +76,8 @@ class UserinfoControllerTest extends PassportTestCase
 
         $config = Configuration::forAsymmetricSigner(
             new Sha256(),
-            InMemory::plainText($keyRepository->getPrivateKey()->getKeyContents()),
-            InMemory::plainText($keyRepository->getPrivateKey()->getKeyContents())
+            InMemory::file($keyRepository->getPrivateKey()->getKeyPath()),
+            InMemory::file($keyRepository->getPrivateKey()->getKeyPath())
         );
 
         $token = $config->builder()
