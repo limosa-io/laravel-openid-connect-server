@@ -8,7 +8,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - uses: php-actions/composer@v1
-    - uses: php-actions/phpunit@v2
+    - uses: php-actions/composer@v6
       with:
-        config: phpunit.xml
+        php_version: 7.4
+    - uses: php-actions/phpunit@v3
+      with:
+        configuration: phpunit.xml
+        php_version: 7.4
+        version: 8.5
+        php_extensions: yaml
