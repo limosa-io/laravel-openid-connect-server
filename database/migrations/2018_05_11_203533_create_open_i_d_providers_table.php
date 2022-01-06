@@ -16,8 +16,6 @@ class CreateOpenIDProvidersTable extends Migration
         Schema::create('open_i_d_providers', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->uuid('tenant_id')->index();
-
             $table->integer('liftime_access_token');
             $table->integer('liftime_refresh_token');
             $table->integer('liftime_id_token');
@@ -30,8 +28,6 @@ class CreateOpenIDProvidersTable extends Migration
             $table->string('init_url', 255)->nullable();
 
             $table->timestamps();
-
-            $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
         });
     }
 
