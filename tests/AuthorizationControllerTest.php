@@ -39,6 +39,12 @@ use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
 
 class AuthorizationControllerTest extends PassportTestCase
 {
+    public static function setUpBeforeClass() : void
+    {
+        chmod(__DIR__ . '/files/oauth-private.key', 0600);
+        chmod(__DIR__ . '/files/oauth-public.key', 0600);
+    }
+
     protected function setUp(): void
     {
         Passport::loadKeysFrom(__DIR__ . '/files');
