@@ -9,3 +9,5 @@ MSG;
 
     exit($message);
 }
+
+chmod(dirname(__FILE__) . '/files/oauth-private.key', 0600);

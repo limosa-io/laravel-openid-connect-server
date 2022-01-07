@@ -20,6 +20,12 @@ use League\OAuth2\Server\Entities\ClientEntityInterface;
 
 class UserinfoControllerTest extends PassportTestCase
 {
+    public static function setUpBeforeClass() : void
+    {
+        chmod(__DIR__ . '/files/oauth-private.key', 0600);
+        chmod(__DIR__ . '/files/oauth-public.key', 0600);
+    }
+
     protected function getPackageProviders($app)
     {
         return [PassportServiceProvider::class];
@@ -76,8 +82,8 @@ class UserinfoControllerTest extends PassportTestCase
 
         $config = Configuration::forAsymmetricSigner(
             new Sha256(),
-            InMemory::plainText($keyRepository->getPrivateKey()->getKeyContents()),
-            InMemory::plainText($keyRepository->getPrivateKey()->getKeyContents())
+            InMemory::file($keyRepository->getPrivateKey()->getKeyPath()),
+            InMemory::file($keyRepository->getPrivateKey()->getKeyPath())
         );
 
         $token = $config->builder()

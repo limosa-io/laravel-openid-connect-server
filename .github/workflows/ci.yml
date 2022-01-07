@@ -16,4 +16,4 @@ jobs:
         configuration: phpunit.xml
         php_version: 7.4
         version: 8.5
-        php_extensions: yaml
+        php_extensions: xdebug
