@@ -43,6 +43,10 @@ class AuthorizationControllerTest extends PassportTestCase
     {
         Passport::loadKeysFrom(__DIR__ . '/files');
         parent::setUp();
+
+        chmod(__DIR__ . '/../vendor/laravel/passport/tests/Feature/../keys/oauth-private.key', 0660);
+        chmod(__DIR__ . '/../vendor/laravel/passport/tests/Feature/../keys/oauth-public.key', 0660);
+
     }
     
     protected function tearDown(): void

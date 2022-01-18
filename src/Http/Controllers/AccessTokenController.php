@@ -3,7 +3,7 @@
 namespace Idaas\Passport\Http\Controllers;
 
 use Idaas\Passport\Passport;
-use Laminas\Diactoros\Response as Psr7Response;
+use Nyholm\Psr7\Response as Psr7Response;
 use Laravel\Passport\Http\Controllers\AccessTokenController as ControllersAccessTokenController;
 use Laravel\Passport\Exceptions\OAuthServerException;
 use League\OAuth2\Server\CryptTrait;
