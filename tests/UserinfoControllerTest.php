@@ -56,6 +56,10 @@ class UserinfoControllerTest extends PassportTestCase
         });
 
         $this->artisan('passport:keys');
+
+        chmod(__DIR__ . '/../vendor/laravel/passport/tests/Feature/../keys/oauth-private.key', 0660);
+        chmod(__DIR__ . '/../vendor/laravel/passport/tests/Feature/../keys/oauth-public.key', 0660);
+
     }
 
     protected function getEnvironmentSetUp($app)

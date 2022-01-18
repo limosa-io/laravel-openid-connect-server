@@ -5,22 +5,19 @@ namespace Idaas\Passport;
 use Idaas\OpenID\Repositories\UserRepositoryInterface;
 use Idaas\OpenID\UserInfo;
 use Illuminate\Http\Request;
-use Laminas\Diactoros\Response;
+use Nyholm\Psr7\Response;
+use Nyholm\Psr7\Factory\Psr17Factory;
 use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
-use Laminas\Diactoros\ResponseFactory;
-use Laminas\Diactoros\ServerRequestFactory;
-use Laminas\Diactoros\StreamFactory;
-use Laminas\Diactoros\UploadedFileFactory;
 
 class UserInfoController
 {
     public function userinfo(Request $request, UserRepositoryInterface $userRepository)
     {
         $psr = (new PsrHttpFactory(
-            new ServerRequestFactory,
-            new StreamFactory,
-            new UploadedFileFactory,
-            new ResponseFactory
+            new Psr17Factory,
+            new Psr17Factory,
+            new Psr17Factory,
+            new Psr17Factory
         ))->createRequest($request);
 
         /* @var $userinfo \Idaas\OpenID\UserInfo */

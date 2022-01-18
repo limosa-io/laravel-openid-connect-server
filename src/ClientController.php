@@ -17,7 +17,7 @@ class ClientController extends LaravelClientController
     /**
      * The client repository instance.
      *
-     * @var \ArieTimmerman\Passport\ClientRepository
+     * @var \ArieTimmerman\Passport\Brdige\ClientRepository
      */
     protected $clients;
 
@@ -118,7 +118,7 @@ class ClientController extends LaravelClientController
         
         $data = $this->validate($request, $this->validations, $this->messages);
         
-        $client = $this->clients->getRepository()->create(
+        $client = $this->clients->create(
             $request->user()->getKey(),
             $request->client_name,
             $request->redirect_uris
@@ -181,7 +181,7 @@ class ClientController extends LaravelClientController
             return new Response('', 404);
         }
 
-        $this->clients->getRepository()->delete(
+        $this->clients->delete(
             $client
         );
     }
