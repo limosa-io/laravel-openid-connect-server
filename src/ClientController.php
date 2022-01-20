@@ -117,8 +117,7 @@ class ClientController extends LaravelClientController
     {
         
         $data = $this->validate($request, $this->validations, $this->messages);
-        
-        $client = $this->clients->create(
+        $client = $this->clients->getRepository()->create(
             $request->user()->getKey(),
             $request->client_name,
             $request->redirect_uris
@@ -181,7 +180,7 @@ class ClientController extends LaravelClientController
             return new Response('', 404);
         }
 
-        $this->clients->delete(
+        $this->clients->getRepository()->delete(
             $client
         );
     }

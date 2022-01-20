@@ -53,6 +53,7 @@ class UserinfoControllerTest extends PassportTestCase
         Passport::routes(function ($router) {
             $router->all();
             $router->forUserinfo();
+            $router->forOIDCClients();
         });
 
         $this->artisan('passport:keys');
@@ -105,6 +106,12 @@ class UserinfoControllerTest extends PassportTestCase
             ->toString();
 
         $result = $this->get('/oauth/userinfo', [
+            'Authorization' => $token
+        ]);
+
+        $result->assertStatus(200);
+
+        $result = $this->get('/oauth/connect/register', [
             'Authorization' => $token
         ]);
 
