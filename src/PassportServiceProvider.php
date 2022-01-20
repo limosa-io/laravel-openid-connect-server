@@ -52,8 +52,7 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
 
         $this->app->bindIf(ClaimRepositoryInterface::class, ClaimRepository::class);
         $this->app->bindIf(UserRepositoryInterface::class, UserRepository::class);
-        $this->app->bindIf(PassportClientRepository::class, ClientRepository::class);
-
+        
         $this->app->singleton(AccessTokenRepositoryInterface::class, function ($app) {
             return $this->app->make(AccessTokenRepository::class);
         });
@@ -127,6 +126,20 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
         );
 
         return $server;
+    }
+
+    /**
+     * Register the client repository.
+     *
+     * @return void
+     */
+    protected function registerClientRepository()
+    {
+        $this->app->singleton(PassportClientRepository::class, function ($container) {
+            $config = $container->make('config')->get('passport.personal_access_client');
+
+            return new ClientRepository($config['id'] ?? null, $config['secret'] ?? null);
+        });
     }
 
     protected function buildAuthCodeGrant()
