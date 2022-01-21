@@ -95,7 +95,7 @@ class RouteRegistrar extends LaravelRouteRegistrar
             // Not in the specs, yet useful
             $router->get('/connect/register/{client_id}', [
                 'uses' => '\Idaas\Passport\ClientController@get',
-            ])->name('oidc.manage.client.replace');
+            ])->name('oidc.manage.client.get');
 
             $router->put('/connect/register/{client_id}', [
                 'uses' => '\Idaas\Passport\ClientController@update',
