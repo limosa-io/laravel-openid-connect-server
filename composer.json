@@ -34,7 +34,7 @@
         }
     },
     "require": {
-        "nl.idaas/openid-server": "^0.2.3",
+        "nl.idaas/openid-server": "^0.2.4",
         "laravel/passport": "^10",
         "laravel/legacy-factories": "^1.3"
     },
