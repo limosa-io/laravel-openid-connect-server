@@ -14,6 +14,6 @@ jobs:
     - uses: php-actions/phpunit@v3
       with:
         configuration: phpunit.xml
-        php_version: 7.4
+        php_version: 8.1
         version: 8.5
         php_extensions: xdebug
