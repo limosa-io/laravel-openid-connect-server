@@ -11,6 +11,8 @@ jobs:
     - uses: php-actions/composer@v6
       with:
         php_version: 7.4
+        command: |
+          composer update && composer install
     - uses: php-actions/phpunit@v3
       with:
         configuration: phpunit.xml
