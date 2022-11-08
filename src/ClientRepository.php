@@ -28,6 +28,7 @@ class ClientRepository extends LaravelClientRepository
             'redirect_uris' => (is_array($redirect)) ? $redirect : [$redirect],
             'personal_access_client' => $personalAccess,
             'password_client' => $password,
+            'grant_types' => ($password) ? '["authorization_code", "password"]' : null,
             'revoked' => false,
         ]);
 
