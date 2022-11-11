@@ -14,7 +14,7 @@ This library is __work in progress__.
 ~~~
 composer require nl.idaas/laravel-openid-connect
 php artisan migrate
-php artisan passport:install
+php artisan passport:install --uuids
 php artisan vendor:publish --provider="Idaas\Passport\PassportServiceProvider" --force
 ~~~
 
