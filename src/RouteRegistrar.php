@@ -2,17 +2,32 @@
 
 namespace Idaas\Passport;
 
-use Laravel\Passport\RouteRegistrar as LaravelRouteRegistrar;
+//use Laravel\Passport\RouteRegistrar as LaravelRouteRegistrar;
+use Illuminate\Contracts\Routing\Registrar as Router;
 
-class RouteRegistrar extends LaravelRouteRegistrar
+/**
+ * @deprecated RouteRegister is removed at Passport 11.
+ * See: https://github.com/laravel/passport/pull/1464
+ * This implementation is preserved this way to document existing routes before this change.
+ */
+class RouteRegistrar
 {
+    /**
+     * The router implementation.
+     *
+     * @var \Illuminate\Contracts\Routing\Registrar
+     */
+    protected $router;
 
-    public function all()
+    /**
+     * Create a new route registrar instance.
+     *
+     * @param  \Illuminate\Contracts\Routing\Registrar  $router
+     * @return void
+     */
+    public function __construct(Router $router)
     {
-        parent::all();
-
-        $this->forUserinfo();
-        $this->forIntrospect();
+        $this->router = $router;
     }
 
     public function forAuthorization()
