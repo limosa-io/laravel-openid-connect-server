@@ -23,7 +23,7 @@ class Passport extends LaravelPassport
     {
         $registerWellKnown = $callback == null;
         $callback = $callback ?: function ($router) {
-            $router->all();
+
         };
 
         $defaultOptions = [
