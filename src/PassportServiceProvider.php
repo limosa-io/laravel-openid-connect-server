@@ -63,6 +63,19 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
         ], function ($router) {
             $router = new RouteRegistrar($router);
             $router->forWellKnown();
+            Route::group([
+                'prefix' => 'oauth',
+                'namespace' => '\Laravel\Passport\Http\Controllers',
+            ], function ($router) {
+                $router = new RouteRegistrar($router);
+                $router->forAuthorization();
+                $router->forAccessTokens();
+                $router->forIntrospect();
+                $router->forUserinfo();
+                $router->forManagement();
+                $router->forOIDCClients();
+            });
+
         });
 
         parent::registerRoutes();
