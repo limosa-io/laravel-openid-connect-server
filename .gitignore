@@ -4,4 +4,4 @@ vendor
 tests/files/oauth-public.key
 tests/files/oauth-private.key
 .vscode
-composer.lock
+!composer.lock
