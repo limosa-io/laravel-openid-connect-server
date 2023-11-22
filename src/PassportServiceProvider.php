@@ -44,6 +44,8 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
 
     protected function registerRoutes()
     {
+        $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
+        parent::registerRoutes();
 
         // The wellKnown endpoints must be registered without a prefix.
         Route::group([
@@ -53,9 +55,10 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
             $router->forWellKnown();
         });
 
-        Route::group([
-            'namespace' => '\Laravel\Passport\Http\Controllers',
-        ], function ($router) {
+//        Route::group([
+//            'prefix' => 'oauth',
+//            'namespace' => '\Laravel\Passport\Http\Controllers',
+//        ], function ($router) {
 //            $router = new RouteRegistrar($router);
 //            $router->forAuthorization();
 //            $router->forAccessTokens();
@@ -63,9 +66,9 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
 //            $router->forUserinfo();
 //            $router->forManagement();
 //            $router->forOIDCClients();
-
-            $this->loadRoutesFrom(__DIR__.'/routes/web.php');
-        });
+//
+//            $this->loadRoutesFrom(route_path('passport.php'));
+//        });
     }
 
     public function boot()
