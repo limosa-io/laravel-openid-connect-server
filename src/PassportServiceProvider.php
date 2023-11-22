@@ -16,7 +16,6 @@ use Idaas\Passport\Bridge\UserRepository;
 use Idaas\Passport\Guards\TokenGuard;
 use Idaas\Passport\Model\Client;
 use Idaas\Passport\Model\PersonalAccessClient;
-use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Bridge\AccessTokenRepository as BridgeAccessTokenRepository;
 use Laravel\Passport\Bridge\AuthCodeRepository;
 use Laravel\Passport\Bridge\RefreshTokenRepository;
@@ -40,19 +39,6 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
     protected function getPersonalAccessClientModel()
     {
         return PersonalAccessClient::class;
-    }
-
-    protected function registerRoutes()
-    {
-        parent::registerRoutes();
-
-        // The wellKnown endpoints must be registered without a prefix.
-        Route::group([
-            'namespace' => '\Laravel\Passport\Http\Controllers'
-        ], function ($router) {
-            $router = new RouteRegistrar($router);
-            $router->forWellKnown();
-        });
     }
 
     public function boot()

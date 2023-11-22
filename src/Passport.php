@@ -21,9 +21,9 @@ class Passport extends LaravelPassport
      */
     public static function routes($callback = null, array $options = [])
     {
-        $registerWellKnown = $callback == null;
-        $callback = $callback ?: function ($router) {
-
+        $registerWellKnown = $callback === null;
+        $callback = $callback ?: function (RouteRegistrar $router) {
+            $router->all();
         };
 
         $defaultOptions = [

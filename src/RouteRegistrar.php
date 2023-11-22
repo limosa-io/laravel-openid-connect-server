@@ -140,4 +140,14 @@ class RouteRegistrar
             ]);
         });
     }
+
+    public function all()
+    {
+        $this->forAuthorization();
+        $this->forUserinfo();
+        $this->forIntrospect();
+        $this->forManagement();
+        $this->forOIDCClients();
+        $this->forAccessTokens();
+    }
 }
