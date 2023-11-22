@@ -44,15 +44,15 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
 
     protected function registerRoutes()
     {
-        if (Passport::$registersRoutes) {
-            Route::group([
-                'as' => 'passport.',
-                'prefix' => config('passport.path', 'oauth'),
-                'namespace' => 'Laravel\Passport\Http\Controllers',
-            ], function () {
-                $this->loadRoutesFrom(__DIR__.'/routes/web.php');
-            });
-        }
+        parent::registerRoutes();
+
+        Route::group([
+            'as' => 'oauth.',
+            'prefix' => config('passport.path', 'oauth'),
+            'namespace' => 'Laravel\Passport\Http\Controllers',
+        ], function () {
+            $this->loadRoutesFrom(__DIR__.'/routes/web.php');
+        });
 
         // The wellKnown endpoints must be registered without a prefix.
         Route::group([
