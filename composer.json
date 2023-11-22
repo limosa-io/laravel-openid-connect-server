@@ -32,16 +32,10 @@
             ]
         }
     },
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/eideasy/openid-connect-server"
-        }
-    ],
     "require": {
-        "nl.idaas/openid-server": "dev-feat-update-packages",
         "laravel/passport": "^10|^11",
-        "laravel/legacy-factories": "^1.3"
+        "laravel/legacy-factories": "^1.3",
+        "omitobisam/openid-server": "0.2.0-alpha"
     },
     "require-dev": {
         "mockery/mockery": "^1.0",
