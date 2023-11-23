@@ -2,11 +2,19 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::post('/token', [
-    'uses' => 'AccessTokenController@issueToken',
-    'as' => 'token',
-    'middleware' => 'throttle',
-]);
+Route::group([], function ($router) {
+    $router->get('/.well-known/openid-configuration', [
+        'uses' => '\Idaas\Passport\ProviderController@wellknown',
+    ])->name('oidc.configuration');
+
+    $router->get('/.well-known/jwks.json', [
+        'uses' => '\Idaas\Passport\ProviderController@jwks',
+    ])->name('oidc.jwks');
+
+    $router->get('/.well-known/webfinger', [
+        'uses' => '\Idaas\Passport\ProviderController@webfinger',
+    ])->name('oidc.webfinger');
+});
 
 Route::group(['middleware' => ['web']], function ($router) {
     $router->get('/authorize', [
@@ -67,5 +75,3 @@ Route::group(['middleware' => ['api']], function ($router) {
         'uses' => '\Idaas\Passport\ClientController@destroy',
     ])->name('oidc.manage.client.delete');
 });
-
-$guard = config('passport.guard', null);
