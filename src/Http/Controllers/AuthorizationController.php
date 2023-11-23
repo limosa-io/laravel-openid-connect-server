@@ -56,9 +56,11 @@ class AuthorizationController extends LaravelAuthorizationController
             ])->generateHttpResponse(new Psr7Response());
         } else {
             $separator = $authorizationRequest->getGrantTypeId() === 'implicit' ? '#' : '?';
-            return $this->response->toResponse($request)->isRedirect(
-                $uri . $separator . 'error=access_denied&state=' . $authorizationRequest->getState()
-            );
+            $uri = $uri . $separator . 'error=access_denied&state=' . $authorizationRequest->getState();
+
+            return $this->withErrorHandling(function () use ($uri) {
+                throw OAuthServerException::accessDenied(null, $uri);
+            });
         }
     }
 
