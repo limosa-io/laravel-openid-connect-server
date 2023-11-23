@@ -16,11 +16,13 @@ use Idaas\Passport\Bridge\UserRepository;
 use Idaas\Passport\Guards\TokenGuard;
 use Idaas\Passport\Model\Client;
 use Idaas\Passport\Model\PersonalAccessClient;
+use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Bridge\AccessTokenRepository as BridgeAccessTokenRepository;
 use Laravel\Passport\Bridge\AuthCodeRepository;
 use Laravel\Passport\Bridge\RefreshTokenRepository;
 use Laravel\Passport\Bridge\ScopeRepository;
 use Laravel\Passport\ClientRepository as PassportClientRepository;
+use Laravel\Passport\Passport;
 use Laravel\Passport\PassportServiceProvider as LaravelPassportServiceProvider;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\ResourceServer;
@@ -68,7 +70,6 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
                 config_path('auth.php'),
             ]
         );
-        Passport::routes();
     }
 
     protected function makeCryptKey($type)
@@ -170,5 +171,14 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
         if (Passport::$runsMigrations) {
             $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         }
+    }
+
+    protected function registerRoutes()
+    {
+        Route::group([
+            'namespace' => 'Laravel\Passport\Http\Controllers',
+        ], function () {
+            $this->loadRoutesFrom(__DIR__.'/../src/routes/web.php');
+        });
     }
 }
