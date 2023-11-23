@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 Route::group([], function ($router) {
     $router->get('/.well-known/openid-configuration', [
         'uses' => '\Idaas\Passport\ProviderController@wellknown',
@@ -14,6 +15,17 @@ Route::group([], function ($router) {
     $router->get('/.well-known/webfinger', [
         'uses' => '\Idaas\Passport\ProviderController@webfinger',
     ])->name('oidc.webfinger');
+});
+
+Route::post('/token', [
+    'uses' => '\Idaas\Passport\Http\Controllers\AccessTokenController@issueToken',
+    'middleware' => 'throttle',
+])->name('oauth.token');
+
+$this->router->group(['middleware' => ['web', 'auth']], function ($router) {
+    $router->delete('/tokens/{token_id}', [
+        'uses' => 'AuthorizedAccessTokenController@destroy',
+    ]);
 });
 
 Route::group(['middleware' => ['web']], function ($router) {
