@@ -2,8 +2,11 @@
 
 namespace Idaas\Passport;
 
+use Idaas\OpenID\CryptKey;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Jose\Component\Core\JWKSet;
+use Jose\Component\KeyManagement\JWKFactory;
 
 class ProviderController extends BaseController
 {
@@ -56,8 +59,27 @@ class ProviderController extends BaseController
 
     public function jwks(ProviderRepository $providerRepository)
     {
+        /**
+         * @var CryptKey $crypt
+         */
         $crypt = resolve(KeyRepository::class)->getPublicKey();
 
+        $key = JWKFactory::createFromKeyFile(
+            $crypt->getKeyPath(),
+            $crypt->getPassPhrase() ?? '',
+            [
+                'alg' => 'RS256',
+                'kty' => 'RSA',
+                'use' => 'sig',
+                'kid' => $crypt->kid ?? 1
+            ]
+        );
+
+        $jwks = new JWKSet([
+            $key
+        ]);
+
+        return json_encode($jwks);
         $result = [
             'alg' => 'RS256',
             'kty' => 'RSA',
