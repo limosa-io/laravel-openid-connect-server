@@ -22,7 +22,7 @@ Route::post('/token', [
     'middleware' => 'throttle',
 ])->name('oauth.token');
 
-$this->router->group(['middleware' => ['web', 'auth']], function ($router) {
+Route::group(['middleware' => ['web', 'auth']], function ($router) {
     $router->delete('/tokens/{token_id}', [
         'uses' => 'AuthorizedAccessTokenController@destroy',
     ]);
