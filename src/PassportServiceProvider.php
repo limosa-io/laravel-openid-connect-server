@@ -68,6 +68,7 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
                 config_path('auth.php'),
             ]
         );
+        Passport::routes();
     }
 
     protected function makeCryptKey($type)
