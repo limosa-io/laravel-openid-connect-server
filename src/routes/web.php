@@ -28,7 +28,7 @@ Route::group(['middleware' => ['web', 'auth']], function ($router) {
     ]);
 });
 
-Route::group(['middleware' => ['web']], function ($router) {
+Route::group(['middleware' => ['web', 'auth:web']], function ($router) {
     $router->get('/authorize', [
         'uses' => '\Idaas\Passport\Http\Controllers\AuthorizationController@authorize',
     ])->name('oauth.authorize');
