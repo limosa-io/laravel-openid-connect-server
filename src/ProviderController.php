@@ -64,22 +64,6 @@ class ProviderController extends BaseController
          */
         $crypt = resolve(KeyRepository::class)->getPublicKey();
 
-        $key = JWKFactory::createFromKeyFile(
-            $crypt->getKeyPath(),
-            $crypt->getPassPhrase() ?? '',
-            [
-                'alg' => 'RS256',
-                'kty' => 'RSA',
-                'use' => 'sig',
-//                'kid' => $crypt->kid ?? 1
-            ]
-        );
-
-        $jwks = new JWKSet([
-            $key
-        ]);
-
-        return json_encode($jwks);
         $result = [
             'alg' => 'RS256',
             'kty' => 'RSA',
