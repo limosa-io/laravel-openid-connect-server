@@ -14,8 +14,10 @@ use Idaas\OpenID\Repositories\AccessTokenRepositoryInterface;
 use Idaas\Passport\Bridge\ClaimRepository;
 use Idaas\Passport\Bridge\UserRepository;
 use Idaas\Passport\Guards\TokenGuard;
+use Idaas\Passport\Http\Controllers\AuthorizationController;
 use Idaas\Passport\Model\Client;
 use Idaas\Passport\Model\PersonalAccessClient;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Bridge\AccessTokenRepository as BridgeAccessTokenRepository;
 use Laravel\Passport\Bridge\AuthCodeRepository;
@@ -183,5 +185,13 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
 
             $this->loadRoutesFrom(__DIR__.'/../src/routes/web.php');
         });
+    }
+
+    public function register()
+    {
+        parent::register();
+        $this->app->when(AuthorizationController::class)
+            ->needs(StatefulGuard::class)
+            ->give(fn() => Auth::guard(config('passport.guard', null)));
     }
 }
