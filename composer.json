@@ -1,17 +1,18 @@
 {
-    "name": "eideasy/laravel-openid-connect",
+    "name": "nl.idaas/laravel-openid-connect",
     "description": "Drop-in replacement for Laravel Passport to add support for OpenID Connect",
     "type": "library",
     "authors": [
         {
-            "name": "eID Easy",
-            "email": "support@eideasy.com"
+            "name": "Arie Timmerman",
+            "email": "arietimmerman@a11n.nl"
         }
     ],
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "Idaas\\Passport\\": "src/"
+            "Idaas\\Passport\\": "src/",
+            "Laravel\\Passport\\Tests\\": "vendor/laravel/passport/tests/"
         }
     },
     "config": {
