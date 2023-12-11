@@ -11,8 +11,7 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "Idaas\\Passport\\": "src/",
-            "Laravel\\Passport\\Tests\\": "vendor/laravel/passport/tests/"
+            "Idaas\\Passport\\": "src/"
         }
     },
     "config": {
@@ -23,7 +22,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "IdaasPassportTests\\": "tests/"
+            "IdaasPassportTests\\": "tests/",
+            "Laravel\\Passport\\Tests\\": "vendor/laravel/passport/tests/"
         }
     },
     "extra": {
