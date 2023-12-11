@@ -5,8 +5,6 @@ namespace Idaas\Passport;
 use Idaas\OpenID\CryptKey;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Jose\Component\Core\JWKSet;
-use Jose\Component\KeyManagement\JWKFactory;
 
 class ProviderController extends BaseController
 {
