@@ -2,6 +2,7 @@
 
 namespace Idaas\Passport;
 
+use Idaas\OpenID\CryptKey;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -56,6 +57,9 @@ class ProviderController extends BaseController
 
     public function jwks(ProviderRepository $providerRepository)
     {
+        /**
+         * @var CryptKey $crypt
+         */
         $crypt = resolve(KeyRepository::class)->getPublicKey();
 
         $result = [

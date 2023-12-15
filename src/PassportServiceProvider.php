@@ -14,13 +14,17 @@ use Idaas\OpenID\Repositories\AccessTokenRepositoryInterface;
 use Idaas\Passport\Bridge\ClaimRepository;
 use Idaas\Passport\Bridge\UserRepository;
 use Idaas\Passport\Guards\TokenGuard;
+use Idaas\Passport\Http\Controllers\AuthorizationController;
 use Idaas\Passport\Model\Client;
 use Idaas\Passport\Model\PersonalAccessClient;
+use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Bridge\AccessTokenRepository as BridgeAccessTokenRepository;
 use Laravel\Passport\Bridge\AuthCodeRepository;
 use Laravel\Passport\Bridge\RefreshTokenRepository;
 use Laravel\Passport\Bridge\ScopeRepository;
 use Laravel\Passport\ClientRepository as PassportClientRepository;
+use Laravel\Passport\Passport;
 use Laravel\Passport\PassportServiceProvider as LaravelPassportServiceProvider;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\ResourceServer;
@@ -31,7 +35,6 @@ use Laravel\Passport\TokenRepository;
 
 class PassportServiceProvider extends LaravelPassportServiceProvider
 {
-
     protected function getClientModel()
     {
         return Client::class;
@@ -120,6 +123,7 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
             new ImplicitGrant(
                 $this->app->make(UserRepositoryInterface::class),
                 $this->app->make(ClaimRepositoryInterface::class),
+                $this->app->make(Session::class),
                 new DateInterval('PT10M'),
                 new DateInterval('PT10M')
             )
@@ -156,8 +160,9 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
                 new PassportUserProvider(Auth::createUserProvider($config['provider']), 'users'),
                 $this->app->make(TokenRepository::class),
                 $this->app->make(ClientRepository::class),
-                $this->app->make('encrypter')
-            ))->user($request);
+                $this->app->make('encrypter'),
+                $this->app['request'],
+            ))->user();
         }, $this->app['request']);
     }
 
@@ -166,7 +171,26 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
         parent::registerMigrations();
 
         if (Passport::$runsMigrations) {
-            return $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+            $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         }
+    }
+
+    protected function registerRoutes()
+    {
+        parent::registerRoutes();
+
+        Route::group([
+            'namespace' => 'Laravel\Passport\Http\Controllers',
+        ], function () {
+            $this->loadRoutesFrom(__DIR__ . '/../src/routes/web.php');
+        });
+    }
+
+    public function register()
+    {
+        parent::register();
+        $this->app->when(AuthorizationController::class)
+            ->needs(StatefulGuard::class)
+            ->give(fn() => Auth::guard(config('passport.guard', null)));
     }
 }
