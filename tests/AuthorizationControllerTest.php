@@ -14,7 +14,6 @@ use Idaas\Passport\ClientRepository;
 use Idaas\Passport\Http\Controllers\AuthorizationController;
 use Idaas\Passport\KeyRepository;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Laravel\Passport\Bridge\AccessToken;
 use Laravel\Passport\Bridge\AuthCode;
@@ -22,6 +21,7 @@ use Laravel\Passport\Bridge\AuthCodeRepository;
 use Laravel\Passport\Bridge\RefreshToken;
 use Laravel\Passport\Bridge\RefreshTokenRepository;
 use Laravel\Passport\Bridge\Scope;
+use Laravel\Passport\Contracts\AuthorizationViewResponse;
 use Laravel\Passport\Http\Controllers\AccessTokenController;
 use Laravel\Passport\Passport;
 use Laravel\Passport\Token;
@@ -32,14 +32,13 @@ use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use Mockery as m;
 use Laravel\Passport\Tests\Feature\PassportTestCase;
-
 use Psr\Http\Message\ServerRequestInterface;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface as LeagueAccessTokenRepositoryInterface;
 use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
 
 class AuthorizationControllerTest extends PassportTestCase
 {
-    public static function setUpBeforeClass() : void
+    public static function setUpBeforeClass(): void
     {
         chmod(__DIR__ . '/files/oauth-private.key', 0600);
         chmod(__DIR__ . '/files/oauth-public.key', 0600);
@@ -47,14 +46,18 @@ class AuthorizationControllerTest extends PassportTestCase
 
     protected function setUp(): void
     {
+
+        $this->afterApplicationCreated(function () {
+            $this->app->register(\Idaas\Passport\PassportServiceProvider::class);
+        });
+
         Passport::loadKeysFrom(__DIR__ . '/files');
         parent::setUp();
 
         chmod(__DIR__ . '/../vendor/laravel/passport/tests/Feature/../keys/oauth-private.key', 0660);
         chmod(__DIR__ . '/../vendor/laravel/passport/tests/Feature/../keys/oauth-public.key', 0660);
-
     }
-    
+
     protected function tearDown(): void
     {
         m::close();
@@ -70,7 +73,7 @@ class AuthorizationControllerTest extends PassportTestCase
         $clients->shouldReceive('find')->andReturn(
             $client = new Client([])
         );
-        
+
         $client  = m::mock(ClientEntityInterface::class);
         $client->shouldReceive('getRedirectUri')->andReturn('https://test123.nl');
         $client->shouldReceive('isConfidential')->andReturn(false);
@@ -101,7 +104,7 @@ class AuthorizationControllerTest extends PassportTestCase
             $scopeRepository,
             (new KeyRepository())->getPrivateKey(),
             "test",
-            new BearerTokenResponse
+            new BearerTokenResponse()
         );
 
         $claimRepository = m::mock(ClaimRepository::class);
@@ -121,7 +124,7 @@ class AuthorizationControllerTest extends PassportTestCase
             $authCodeRepository,
             $refreshTokenRepository,
             $claimRepository,
-            new Session,
+            new Session(),
             new DateInterval('P1Y'),
             new DateInterval('P1Y')
         );
@@ -135,10 +138,12 @@ class AuthorizationControllerTest extends PassportTestCase
             new DateInterval('P1Y')
         );
 
-        $response = m::mock(ResponseFactory::class);
+        $response = m::mock(AuthorizationViewResponse::class);
+        $guard = m::mock(\Illuminate\Contracts\Auth\StatefulGuard::class);
 
         $controller = new AuthorizationController(
             $server,
+            $guard,
             $response
         );
 

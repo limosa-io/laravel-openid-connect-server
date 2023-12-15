@@ -33,6 +33,11 @@ class UserinfoControllerTest extends PassportTestCase
 
     protected function setUp(): void
     {
+
+        $this->afterApplicationCreated(function () {
+            $this->app->register(\Idaas\Passport\PassportServiceProvider::class);
+        });
+        
         parent::setUp();
 
         $accessTokenRepository = m::mock(\Idaas\Passport\Bridge\AccessTokenRepository::class);
