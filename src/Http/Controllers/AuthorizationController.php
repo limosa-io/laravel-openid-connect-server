@@ -104,7 +104,7 @@ class AuthorizationController extends LaravelAuthorizationController
         $user = $request->user();
         $client = $clients->find($authRequest->getClient()->getIdentifier());
 
-        if ($this->isApproved($authRequest, $user, $client, $tokens)) {
+        if ($client->skipsAuthorization() || $this->isApproved($authRequest, $user, $client, $tokens)) {
             return $this->approveRequest($authRequest, $user);
         } else {
             return $this->returnError($authRequest, $request);
