@@ -85,7 +85,7 @@ class ProviderController extends BaseController
             // ];
 
         } else {
-            $pkey = openssl_pkey_get_details(openssl_pkey_get_public($crypt->getKeyPath()));
+            $pkey = openssl_pkey_get_details(openssl_pkey_get_public($crypt->getKeyContents()));
         }
 
         $result['n'] = $this->base64WebSafe($pkey['rsa']['n']);
