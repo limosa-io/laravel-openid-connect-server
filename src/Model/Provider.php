@@ -79,8 +79,6 @@ class Provider implements ProviderInterface
 
     public function toJson($options = 0)
     {
-        return json_encode([
-            $this->wellKnown
-        ], $options);
+        return json_encode($this->wellKnown, $options);
     }
 }
