@@ -179,11 +179,13 @@ class PassportServiceProvider extends LaravelPassportServiceProvider
     {
         parent::registerRoutes();
 
-        Route::group([
-            'namespace' => 'Laravel\Passport\Http\Controllers',
-        ], function () {
-            $this->loadRoutesFrom(__DIR__ . '/../src/routes/web.php');
-        });
+        if (Passport::$registersRoutes) {
+            Route::group([
+                'namespace' => 'Laravel\Passport\Http\Controllers',
+            ], function () {
+                $this->loadRoutesFrom(__DIR__ . '/../src/routes/web.php');
+            });
+        }
     }
 
     public function register()
