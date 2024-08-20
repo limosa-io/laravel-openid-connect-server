@@ -6,7 +6,6 @@ use Idaas\OpenID\Entities\ClaimEntityInterface;
 
 class ClaimEntity implements ClaimEntityInterface
 {
-
     protected $identifier;
     protected $type;
     protected $essential;
@@ -45,7 +44,7 @@ class ClaimEntity implements ClaimEntityInterface
         return $this->essential;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'identifier' => $this->getIdentifier(),
